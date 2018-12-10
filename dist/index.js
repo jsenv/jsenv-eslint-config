@@ -92,155 +92,6 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
-const mergeArrayElements = (firstArray, secondArray, compare = (a, b) => a.name === b.name) => {
-  const mergedElements = [];
-  firstArray.forEach(elementInFirstArray => {
-    const existingRule = secondArray.find(elementInSecondArray => {
-      return compare(elementInFirstArray, elementInSecondArray);
-    });
-
-    if (!existingRule) {
-      mergedElements.push(_objectSpread({}, elementInFirstArray));
-    }
-  });
-  secondArray.forEach(elementInSecondArray => {
-    mergedElements.push(_objectSpread({}, firstArray.find(elementInFirstArray => compare(elementInFirstArray, elementInSecondArray)) || {}, elementInSecondArray));
-  });
-  return mergedElements;
-};
-
-const babelParserOptions = {
-  parser: "babel-eslint",
-  parserOptions: {
-    ecmaVersion: 9,
-    sourceType: "module",
-    ecmaFeatures: {
-      jsx: true,
-      spread: true,
-      restParams: true,
-      defaultParams: true,
-      destructuring: true,
-      objectLiteralShorthandMethods: true
-    }
-  }
-};
-
-// to be converted
-// rules: {
-// 	"boolean-style": [2, "boolean"],
-// 	"define-flow-type": 1,
-// 	"delimiter-dangle": [2, "never"],
-// 	"generic-spacing": [2, "never"],
-// 	"no-primitive-constructor-types": 2,
-// 	"no-types-missing-file-annotation": ["off"],
-// 	"no-weak-types": ["off"],
-// 	"object-type-delimiter": [2, "comma"],
-// 	"require-parameter-type": ["off"],
-// 	"require-return-type": [
-// 		"off",
-// 		"always",
-// 		{
-// 			annotateUndefined: "never"
-// 		}
-// 	],
-// 	"require-valid-file-annotation": ["off"],
-// 	semi: ["off", "always"],
-// 	"space-after-type-colon": [2, "always"],
-// 	"space-before-generic-bracket": [2, "never"],
-// 	"space-before-type-colon": [2, "never"],
-// 	"type-id-match": [2, "^([A-Z][a-z0-9]+)+Type$"],
-// 	"union-intersection-spacing": [2, "always"],
-// 	"use-flow-type": 1,
-// 	"valid-syntax": 1
-// }
-const rules = [];
-
-const flowtype = {
-  name: "flow",
-  settings: {
-    onlyFilesWithFlowAnnotation: true
-  },
-  rules,
-  enabled: false // disabled for now, when flow will allow to have untyped module boundaries I will reconsider
-  // https://github.com/facebook/flow/issues/4540
-
-};
-
-const defaultRule = {
-  name: "default"
-};
-const noUnresolved = {
-  name: "no-unresolved",
-  options: [{
-    commonjs: true,
-    amd: false,
-    caseSensitive: false
-  }]
-};
-const named = {
-  name: "named"
-};
-const namespace = {
-  name: "namespace",
-  options: [{
-    allowComputed: true
-  }]
-};
-const noAbsolutePath = {
-  name: "no-absolute-path"
-};
-const noDynamicRequire = {
-  name: "no-dynamic-require"
-};
-const exportRule = {
-  name: "export"
-};
-const noNamedAsDefault = {
-  name: "no-named-as-default",
-  severity: "warn"
-};
-const first = {
-  name: "first",
-  severity: "warn"
-};
-const noDuplicate = {
-  name: "no-duplicates",
-  severity: "warn"
-};
-const newLineAfterImport = {
-  name: "newline-after-import",
-  severity: "warn"
-};
-const maxDependency = {
-  name: "max-dependencies",
-  severity: "warn",
-  options: [{
-    max: 10
-  }]
-};
-const noAnonymousDefaultExport = {
-  name: "no-anonymous-default-export",
-  options: [{
-    allowArray: true,
-    allowArrowFunction: false,
-    allowAnonymousClass: false,
-    allowAnonymousFunction: false,
-    allowLiteral: true,
-    allowObject: true
-  }],
-  disabled: true
-};
-const rules$1 = [defaultRule, noUnresolved, named, namespace, noAbsolutePath, noDynamicRequire, exportRule, noNamedAsDefault, first, noDuplicate, newLineAfterImport, maxDependency, noAnonymousDefaultExport];
-
-const importPlugin = {
-  name: "import",
-  settings: {
-    extensions: [".js", ".jsx"]
-  },
-  rules: rules$1,
-  enabled: true
-};
-
 // https://eslint.org/docs/rules/
 const acessorPairs = {
   name: "accessor-pairs"
@@ -317,8 +168,7 @@ const noExtraBooleanCasting = {
   name: "no-extra-boolean-cast"
 };
 const noExtraSemiColon = {
-  name: "no-extra-semi",
-  disabled: true
+  name: "no-extra-semi"
 };
 const noFunctionAssignment = {
   name: "no-func-assign"
@@ -331,12 +181,6 @@ const noInvalidRegExp = {
 };
 const noIrregularWhiteSpace = {
   name: "no-irregular-whitespace"
-};
-const noNegatedInLHS = {
-  name: "no-negated-in-lhs",
-  disabled: true // disabled because deprecated in favor of no-unsafe-negation
-  // https://eslint.org/docs/rules/no-negated-in-lhs
-
 };
 const noObjectCall = {
   name: "no-obj-calls"
@@ -379,12 +223,6 @@ const noEmptyPattern = {
 };
 const noEqualNull = {
   name: "no-eq-null"
-};
-const noEval = {
-  name: "no-eval",
-  disabled: true // Because every one knows eval is a bad idea
-  // so when it's used it's always for a good reason
-
 };
 const noExtendNative = {
   name: "no-extend-native"
@@ -488,11 +326,6 @@ const noUselessConcat = {
 };
 const noVoid = {
   name: "no-void"
-};
-const noWarningComments = {
-  name: "no-warning-comments",
-  disabled: true // Because I like warning comments
-
 };
 const noWith = {
   name: "no-with"
@@ -712,8 +545,7 @@ const quoteProp = {
 };
 const quote = {
   name: "quote",
-  options: ["double"],
-  disabled: true // disabled because it becomes painfull when switching between "" and `` (template literals)
+  options: ["double"] // disabled because it becomes painfull when switching between "" and `` (template literals)
 
 };
 const semiSpacing = {
@@ -740,13 +572,6 @@ const spaceAroundInfixOperator = {
 };
 const spaceAroundUnaryOperator = {
   name: "space-unary-ops"
-};
-const spacedComment = {
-  name: "spaced-comment",
-  options: ["always", {
-    markers: ["!"]
-  }],
-  disabled: true
 };
 const arrowParenthesis = {
   name: "arrow-parens",
@@ -838,22 +663,12 @@ const objectShortHand = {
   options: ["always"]
 };
 
-const env = {
-  browser: true,
-  node: true,
-  es6: true
-};
-const rules$2 = [acessorPairs, arrayCallbackReturn, arrowParenthesis, arrowSpacing, blockScopedVar, braceStyle, camelcase, commaDangle, commaSpacing, commaStyle, computedPropertySpacing, consistentReturn, constructorSuper, curly, defaultCase, dotLocation, dotNotation, endOfLineLast, eqeqeq, generatorStarSpacing, getterReturn, guardForIn, handleCallbackError, indent, jsxQuote, keySpacing, keywordSpacing, lineBreakStyle, maxLineLength, maxNestedCallback, newCap, newParens, noAlert, noArrayConstructor, noBracketSpacing, noCaller, noCaseDeclaration, noClassAssignment, noConditionalAssignement, noConstantCondition, noConstAssignment, noControlRegEx, noDebugger, noDeleteVar, noDivRegex, noDuplicateArgs, noDuplicateCase, noDuplicateClassMember, noDuplicateKeys, noElseReturn, noEmptyCharacterClass, noEmptyPattern, noEqualNull, noEval, noExtendNative, noExtraAssignment, noExtraBind, noExtraBooleanCasting, noExtraLabel, noExtraSemiColon, noFallThrough, noFloatingDecimal, noFunctionAssignment, noImplicitCoercion, noImplicitGlobal, noImpliedEval, noInnerDeclaration, noInvalidRegExp, noIrregularWhiteSpace, noIterator, noLabel, noLabelVar, noLoneBlock, noLonelyIf, noLoopFunction, // noMagicNumber,
-noMixedRequire, noMixedSpaceAndTab, noMultipleEmptyLine, noMultipleSpace, noMultipleString, noNativeReassignment, noNegatedCondition, noNegatedInLHS, noNestedTernary, noNew, noNewFunction, noNewRequire, noNewSymbol, noNewWrapper, noNexObject, noObjectCall, noOctal, noOctalEscape, noPathConcat, noProto, noRedeclare, noRegExSpace, noRestrictedImport, noRestrictedModule, noRestrictedSyntax, noReturnAssignment, noScriptUrl, noSelfAssignment, noSelfCompare, noSequence, noShadowRestrictedName, noSpacedFunction, noSparseArray, noThisBeforeSuper, noThrowLiteral, noTrailingSpace, noUndeededTernary, noUndef, // noUndefined,
-noUndefInit, noUnexpectedMultipleline, noUnmodifiedLoopCondition, noUnreachable, noUnusedExpression, noUnusedLabel, noUnusedVar, noUseBeforeDefine, noUselessCall, noUselessConcat, noUselessConstructor, noVoid, noWarningComments, noWhiteSpaceBeforeProperty, noWith, objectCurlySpacing, objectShortHand, oneVar, oneVarDeclarationPerLine, operatorAssignment, operatorLineBreak, paddedBlock, preferConst, preferRestParam, preferSpread, preferTemplate, quote, quoteProp, semi, semiSpacing, spaceAroundInfixOperator, spaceAroundUnaryOperator, spaceBeforeBlock, spaceBeforeFunctionParenthesis, spacedComment, spaceInParenthesis, templateCurlySpacing, useIsNaN, validJSDoc, validTypeOf, wrapIIFE, yieldStarSpacing, yoda];
-const plugins = [flowtype, importPlugin];
-const defaultOptions = {
-  env,
-  plugins,
-  rules: rules$2
-};
+const enabledArray = [acessorPairs, arrayCallbackReturn, arrowParenthesis, arrowSpacing, blockScopedVar, braceStyle, camelcase, commaDangle, commaSpacing, commaStyle, computedPropertySpacing, consistentReturn, constructorSuper, curly, defaultCase, dotLocation, dotNotation, endOfLineLast, eqeqeq, generatorStarSpacing, getterReturn, guardForIn, handleCallbackError, indent, jsxQuote, keySpacing, keywordSpacing, lineBreakStyle, maxLineLength, maxNestedCallback, newCap, newParens, noAlert, noArrayConstructor, noBracketSpacing, noCaller, noCaseDeclaration, noClassAssignment, noConditionalAssignement, noConstantCondition, noConstAssignment, noControlRegEx, noDebugger, noDeleteVar, noDivRegex, noDuplicateArgs, noDuplicateCase, noDuplicateClassMember, noDuplicateKeys, noElseReturn, noEmptyCharacterClass, noEmptyPattern, noEqualNull, noExtendNative, noExtraAssignment, noExtraBind, noExtraBooleanCasting, noExtraLabel, noFallThrough, noFloatingDecimal, noFunctionAssignment, noImplicitCoercion, noImplicitGlobal, noImpliedEval, noInnerDeclaration, noInvalidRegExp, noIrregularWhiteSpace, noIterator, noLabel, noLabelVar, noLoneBlock, noLonelyIf, noLoopFunction, // noMagicNumber,
+noMixedRequire, noMixedSpaceAndTab, noMultipleEmptyLine, noMultipleSpace, noMultipleString, noNativeReassignment, noNegatedCondition, noNestedTernary, noNew, noNewFunction, noNewRequire, noNewSymbol, noNewWrapper, noNexObject, noObjectCall, noOctal, noOctalEscape, noPathConcat, noProto, noRedeclare, noRegExSpace, noRestrictedImport, noRestrictedModule, noRestrictedSyntax, noReturnAssignment, noScriptUrl, noSelfAssignment, noSelfCompare, noSequence, noShadowRestrictedName, noSpacedFunction, noSparseArray, noThisBeforeSuper, noThrowLiteral, noTrailingSpace, noUndeededTernary, noUndef, // noUndefined,
+noUndefInit, noUnexpectedMultipleline, noUnmodifiedLoopCondition, noUnreachable, noUnusedExpression, noUnusedLabel, noUnusedVar, noUseBeforeDefine, noUselessCall, noUselessConcat, noUselessConstructor, noVoid, noWhiteSpaceBeforeProperty, noWith, objectCurlySpacing, objectShortHand, oneVar, oneVarDeclarationPerLine, operatorAssignment, operatorLineBreak, paddedBlock, preferConst, preferRestParam, preferSpread, preferTemplate, quoteProp, semi, semiSpacing, spaceAroundInfixOperator, spaceAroundUnaryOperator, spaceBeforeBlock, spaceBeforeFunctionParenthesis, spaceInParenthesis, templateCurlySpacing, useIsNaN, validJSDoc, validTypeOf, wrapIIFE, yieldStarSpacing, yoda];
 
-const rulesHandledByPrettier = [arrowParenthesis, arrowSpacing, // blockSpacing,
+// rules conflicting with prettier
+const prettierConflictArray = [arrowParenthesis, arrowSpacing, // blockSpacing,
 braceStyle, commaDangle, commaStyle, computedPropertySpacing, curly, dotLocation, endOfLineLast, // functionCallSpacing,
 // functionParenthesisNewLine,
 // generatorStar,
@@ -887,40 +702,78 @@ spaceInParenthesis, // spaceAroundUnaryWordOperator,
 templateCurlySpacing, // templateTagSpacing,
 // unicodeBom,
 wrapIIFE, // wrapRegex,
-yieldStarSpacing].map(rule => {
+yieldStarSpacing];
+
+const rules = enabledArray.map(rule => {
   return _objectSpread({}, rule, {
-    disabled: true
+    disabled: rule.disabled || prettierConflictArray.indexOf(rule) > -1
   });
 });
-const prettierOptions = {
-  rules: rulesHandledByPrettier
+
+const defaultRule = {
+  name: "import/default"
+};
+const noUnresolved = {
+  name: "import/no-unresolved",
+  options: [{
+    commonjs: true,
+    amd: false,
+    caseSensitive: false
+  }]
+};
+const named = {
+  name: "import/named"
+};
+const namespace = {
+  name: "import/namespace",
+  options: [{
+    allowComputed: true
+  }]
+};
+const noAbsolutePath = {
+  name: "import/no-absolute-path"
+};
+const noDynamicRequire = {
+  name: "import/no-dynamic-require"
+};
+const exportRule = {
+  name: "import/export"
+};
+const noNamedAsDefault = {
+  name: "import/no-named-as-default",
+  severity: "warn"
+};
+const first = {
+  name: "import/first",
+  severity: "warn"
+};
+const noDuplicate = {
+  name: "import/no-duplicates",
+  severity: "warn"
+};
+const newLineAfterImport = {
+  name: "import/newline-after-import",
+  severity: "warn"
+};
+const maxDependency = {
+  name: "import/max-dependencies",
+  severity: "warn",
+  options: [{
+    max: 10
+  }]
 };
 
-const mergeOptions = (...objects) => {
-  const options = objects.reduce((accumulator, object) => {
-    if (typeof object === undefined || object === null) {
-      return accumulator;
-    }
+const enabledArray$1 = [defaultRule, noUnresolved, named, namespace, noAbsolutePath, noDynamicRequire, exportRule, noNamedAsDefault, first, noDuplicate, newLineAfterImport, maxDependency];
 
-    return _objectSpread({}, accumulator, object, {
-      parserOptions: object.parserOptions ? _objectSpread({}, accumulator.parserOptions, object.parserOptions) : accumulator.parserOptions,
-      env: object.env ? _objectSpread({}, accumulator.env, object.env) : accumulator.env,
-      globals: object.globals ? _objectSpread({}, accumulator.globals, object.globals) : accumulator.globals,
-      settings: object.settings ? _objectSpread({}, accumulator.settings, object.settings) : accumulator.settings,
-      plugins: object.plugins ? _toConsumableArray(accumulator.plugins).concat(_toConsumableArray(object.plugins)) : accumulator.plugins,
-      rules: object.rules ? mergeArrayElements(accumulator.rules, object.rules) : accumulator.rules
-    });
-  }, {
-    env: {},
-    globals: {},
-    settings: {},
-    plugins: [],
-    rules: []
-  });
-  return options;
+const plugin = {
+  name: "import",
+  settings: {
+    extensions: [".js", ".jsx"]
+  },
+  rules: enabledArray$1
 };
 
-const createEslintRule = (_ref) => {
+const eslintRuleToStandardFormat = (_ref) => {
   let {
     name,
     severity = "error",
@@ -942,26 +795,42 @@ const createEslintRule = (_ref) => {
   return [disabled ? "off" : severity].concat(_toConsumableArray(options));
 };
 
-const createConfig = options => {
+const ruleArrayToRuleMap = ruleArray => {
   const ruleMap = {};
-  options.rules.forEach(rule => {
-    ruleMap[rule.name] = createEslintRule(rule);
+  ruleArray.forEach(rule => {
+    ruleMap[rule.name] = eslintRuleToStandardFormat(rule);
   });
-  const plugins = options.plugins.filter(plugin => plugin.enabled).map(plugin => {
-    options.settings[plugin.name] = plugin.settings;
-    plugin.rules.forEach(pluginRule => {
-      ruleMap[`${plugin.name}/${pluginRule.name}`] = createEslintRule(pluginRule);
-    });
-    return plugin.name;
-  });
-  return _objectSpread({}, options, {
-    plugins,
-    rules: ruleMap
-  });
+  return ruleMap;
 };
-const config = createConfig(mergeOptions(defaultOptions, babelParserOptions, prettierOptions));
 
-exports.mergeOptions = mergeOptions;
-exports.createConfig = createConfig;
+const config = {
+  parser: "babel-eslint",
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+      // spread: true,
+      // restParams: true,
+      defaultParams: true,
+      destructuring: true,
+      objectLiteralShorthandMethods: true
+    }
+  },
+  plugins: [plugin.name],
+  settings: {
+    [plugin.name]: plugin.settings
+  },
+  env: {
+    browser: true,
+    node: true,
+    es6: true
+  },
+  // array of object makes things more complex
+  // we should use a map of object as eslint does naturally
+  rules: ruleArrayToRuleMap(_toConsumableArray(rules).concat(_toConsumableArray(plugin.rules)))
+};
+debugger
+
 exports.config = config;
 //# sourceMappingURL=index.js.map
