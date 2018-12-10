@@ -810,8 +810,8 @@ const config = {
     sourceType: "module",
     ecmaFeatures: {
       jsx: true,
-      // spread: true,
-      // restParams: true,
+      spread: true,
+      restParams: true,
       defaultParams: true,
       destructuring: true,
       objectLiteralShorthandMethods: true
@@ -830,7 +830,6 @@ const config = {
   // we should use a map of object as eslint does naturally
   rules: ruleArrayToRuleMap(_toConsumableArray(rules).concat(_toConsumableArray(plugin.rules)))
 };
-debugger
 
 exports.config = config;
 //# sourceMappingURL=index.js.map
