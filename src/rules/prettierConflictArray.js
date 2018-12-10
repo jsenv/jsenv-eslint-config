@@ -1,4 +1,4 @@
-// disable some rules because of prettier
+// rules conflicting with prettier
 // see https://github.com/prettier/eslint-config-prettier/blob/master/index.js
 
 import {
@@ -78,7 +78,7 @@ import {
   yieldStarSpacing,
 } from "./rules.js"
 
-const rulesHandledByPrettier = [
+export const prettierConflictArray = [
   arrowParenthesis,
   arrowSpacing,
   // blockSpacing,
@@ -153,13 +153,4 @@ const rulesHandledByPrettier = [
   wrapIIFE,
   // wrapRegex,
   yieldStarSpacing,
-].map((rule) => {
-  return {
-    ...rule,
-    disabled: true,
-  }
-})
-
-export const prettierOptions = {
-  rules: rulesHandledByPrettier,
-}
+]

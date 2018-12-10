@@ -11,32 +11,32 @@
   },
   "main": "dist/index.js",
   "module": "index.js",
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@dmail/project-prettier-config": "github:dmail/project-prettier-config",
     "prettier": "1.9.1",
     "@dmail/prettiest": "1.0.0",
-    "eslint": "5.1.0",
+    "eslint": "5.10.0",
     "eslint-plugin-import": "2.6.0",
-    "babel-eslint": "9.0.0",
+    "babel-eslint": "10.0.1",
     "rimraf": "2.6.2",
     "rollup": "0.66.2",
     "rollup-plugin-babel": "4.0.3",
     "rollup-plugin-node-resolve": "3.4.0",
-    "@babel/core": "7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "7.0.0",
-    "@babel/plugin-transform-spread": "7.0.0"
+    "@babel/core": "7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.2.0",
+    "@babel/plugin-transform-spread": "7.2.0"
   },
   "scripts": {
-    "code-lint": "eslint .",
-    "code-format": "prettiest",
-    "code-clean": "rimraf dist",
-    "code-compile": "node ./script/compile.js",
-    "code-build": "npm run code-clean && npm run code-compile",
-    "compile": "npm run code-compile",
-    "build": "npm run code-build",
-    "prepublishOnly": "npm run code-compile",
-    "ci": "npm run code-compile && npm run code-lint && npm run code-format"
+    "lint": "eslint .",
+    "format": "prettiest",
+    "compile": "node ./script/compile.js",
+    "clean": "rimraf dist",
+    "dist": "npm run clean && npm run compile",
+    "prepublishOnly": "npm run dist"
   }
 }

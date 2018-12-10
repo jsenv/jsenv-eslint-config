@@ -100,7 +100,6 @@ export const noExtraBooleanCasting = {
 
 export const noExtraSemiColon = {
   name: "no-extra-semi",
-  disabled: true,
 }
 
 export const noFunctionAssignment = {
@@ -121,7 +120,6 @@ export const noIrregularWhiteSpace = {
 
 export const noNegatedInLHS = {
   name: "no-negated-in-lhs",
-  disabled: true,
   // disabled because deprecated in favor of no-unsafe-negation
   // https://eslint.org/docs/rules/no-negated-in-lhs
 }
@@ -184,7 +182,6 @@ export const noEqualNull = {
 
 export const noEval = {
   name: "no-eval",
-  disabled: true,
   // Because every one knows eval is a bad idea
   // so when it's used it's always for a good reason
 }
@@ -332,8 +329,6 @@ export const noVoid = {
 
 export const noWarningComments = {
   name: "no-warning-comments",
-  disabled: true,
-  // Because I like warning comments
 }
 
 export const noWith = {
@@ -628,7 +623,6 @@ export const quote = {
     // double because closer to .json, this it increase compatibility between .js and .json
     // also because ' are often used in english and '' would lead to 'I\'m' VS "I'm"
   ],
-  disabled: true,
   // disabled because it becomes painfull when switching between "" and `` (template literals)
 }
 
@@ -677,7 +671,6 @@ export const spacedComment = {
       markers: ["!"],
     },
   ],
-  disabled: true,
 }
 
 export const arrowParenthesis = {

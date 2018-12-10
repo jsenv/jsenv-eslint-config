@@ -1,10 +1,9 @@
-import { rules } from "./rules.js"
+import { enabledArray } from "./enabledArray.js"
 
-export const importPlugin = {
+export const plugin = {
   name: "import",
   settings: {
     extensions: [".js", ".jsx"],
   },
-  rules,
-  enabled: true,
+  rules: enabledArray,
 }

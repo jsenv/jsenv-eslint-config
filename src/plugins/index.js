@@ -1,2 +1,1 @@
-export * from "./flowtype/flowtype.js"
-export * from "./import/import.js"
+export { plugin as importPlugin } from "./import/import.js"

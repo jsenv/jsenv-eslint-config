@@ -1,9 +1,9 @@
 export const defaultRule = {
-  name: "default",
+  name: "import/default",
 }
 
 export const noUnresolved = {
-  name: "no-unresolved",
+  name: "import/no-unresolved",
   options: [
     {
       commonjs: true,
@@ -14,11 +14,11 @@ export const noUnresolved = {
 }
 
 export const named = {
-  name: "named",
+  name: "import/named",
 }
 
 export const namespace = {
-  name: "namespace",
+  name: "import/namespace",
   options: [
     {
       allowComputed: true,
@@ -27,39 +27,39 @@ export const namespace = {
 }
 
 export const noAbsolutePath = {
-  name: "no-absolute-path",
+  name: "import/no-absolute-path",
 }
 
 export const noDynamicRequire = {
-  name: "no-dynamic-require",
+  name: "import/no-dynamic-require",
 }
 
 export const exportRule = {
-  name: "export",
+  name: "import/export",
 }
 
 export const noNamedAsDefault = {
-  name: "no-named-as-default",
+  name: "import/no-named-as-default",
   severity: "warn",
 }
 
 export const first = {
-  name: "first",
+  name: "import/first",
   severity: "warn",
 }
 
 export const noDuplicate = {
-  name: "no-duplicates",
+  name: "import/no-duplicates",
   severity: "warn",
 }
 
 export const newLineAfterImport = {
-  name: "newline-after-import",
+  name: "import/newline-after-import",
   severity: "warn",
 }
 
 export const maxDependency = {
-  name: "max-dependencies",
+  name: "import/max-dependencies",
   severity: "warn",
   options: [
     {
@@ -69,7 +69,7 @@ export const maxDependency = {
 }
 
 export const noAnonymousDefaultExport = {
-  name: "no-anonymous-default-export",
+  name: "import/no-anonymous-default-export",
   options: [
     {
       allowArray: true,
@@ -80,7 +80,6 @@ export const noAnonymousDefaultExport = {
       allowObject: true,
     },
   ],
-  disabled: true,
 }
 
 export const rules = [

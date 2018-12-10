@@ -1,4 +1,3 @@
-import { flowtype, importPlugin } from "./plugins/index.js"
 import {
   acessorPairs,
   arrayCallbackReturn,
@@ -53,13 +52,11 @@ import {
   noEmptyCharacterClass,
   noEmptyPattern,
   noEqualNull,
-  noEval,
   noExtendNative,
   noExtraAssignment,
   noExtraBind,
   noExtraBooleanCasting,
   noExtraLabel,
-  noExtraSemiColon,
   noFallThrough,
   noFloatingDecimal,
   noFunctionAssignment,
@@ -83,7 +80,6 @@ import {
   noMultipleString,
   noNativeReassignment,
   noNegatedCondition,
-  noNegatedInLHS,
   noNestedTernary,
   noNew,
   noNewFunction,
@@ -127,7 +123,6 @@ import {
   noUselessConcat,
   noUselessConstructor,
   noVoid,
-  noWarningComments,
   noWhiteSpaceBeforeProperty,
   noWith,
   objectCurlySpacing,
@@ -141,7 +136,6 @@ import {
   preferRestParam,
   preferSpread,
   preferTemplate,
-  quote,
   quoteProp,
   semi,
   semiSpacing,
@@ -149,7 +143,6 @@ import {
   spaceAroundUnaryOperator,
   spaceBeforeBlock,
   spaceBeforeFunctionParenthesis,
-  spacedComment,
   spaceInParenthesis,
   templateCurlySpacing,
   useIsNaN,
@@ -160,13 +153,7 @@ import {
   yoda,
 } from "./rules.js"
 
-const env = {
-  browser: true,
-  node: true,
-  es6: true,
-}
-
-const rules = [
+export const enabledArray = [
   acessorPairs,
   arrayCallbackReturn,
   arrowParenthesis,
@@ -220,13 +207,11 @@ const rules = [
   noEmptyCharacterClass,
   noEmptyPattern,
   noEqualNull,
-  noEval,
   noExtendNative,
   noExtraAssignment,
   noExtraBind,
   noExtraBooleanCasting,
   noExtraLabel,
-  noExtraSemiColon,
   noFallThrough,
   noFloatingDecimal,
   noFunctionAssignment,
@@ -250,7 +235,6 @@ const rules = [
   noMultipleString,
   noNativeReassignment,
   noNegatedCondition,
-  noNegatedInLHS,
   noNestedTernary,
   noNew,
   noNewFunction,
@@ -294,7 +278,6 @@ const rules = [
   noUselessConcat,
   noUselessConstructor,
   noVoid,
-  noWarningComments,
   noWhiteSpaceBeforeProperty,
   noWith,
   objectCurlySpacing,
@@ -308,7 +291,6 @@ const rules = [
   preferRestParam,
   preferSpread,
   preferTemplate,
-  quote,
   quoteProp,
   semi,
   semiSpacing,
@@ -316,7 +298,6 @@ const rules = [
   spaceAroundUnaryOperator,
   spaceBeforeBlock,
   spaceBeforeFunctionParenthesis,
-  spacedComment,
   spaceInParenthesis,
   templateCurlySpacing,
   useIsNaN,
@@ -326,11 +307,3 @@ const rules = [
   yieldStarSpacing,
   yoda,
 ]
-
-const plugins = [flowtype, importPlugin]
-
-export const defaultOptions = {
-  env,
-  plugins,
-  rules,
-}
