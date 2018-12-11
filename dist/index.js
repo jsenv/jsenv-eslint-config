@@ -358,10 +358,6 @@ const noUndef = {
 const noUnusedVar = {
   name: "no-unused-vars"
 };
-const noUseBeforeDefine = {
-  name: "no-use-before-define",
-  options: ["nofunc"]
-};
 const handleCallbackError = {
   name: "handle-callback-err",
   severity: "warn"
@@ -665,7 +661,8 @@ const objectShortHand = {
 
 const enabledArray = [acessorPairs, arrayCallbackReturn, arrowParenthesis, arrowSpacing, blockScopedVar, braceStyle, camelcase, commaDangle, commaSpacing, commaStyle, computedPropertySpacing, consistentReturn, constructorSuper, curly, defaultCase, dotLocation, dotNotation, endOfLineLast, eqeqeq, generatorStarSpacing, getterReturn, guardForIn, handleCallbackError, indent, jsxQuote, keySpacing, keywordSpacing, lineBreakStyle, maxLineLength, maxNestedCallback, newCap, newParens, noAlert, noArrayConstructor, noBracketSpacing, noCaller, noCaseDeclaration, noClassAssignment, noConditionalAssignement, noConstantCondition, noConstAssignment, noControlRegEx, noDebugger, noDeleteVar, noDivRegex, noDuplicateArgs, noDuplicateCase, noDuplicateClassMember, noDuplicateKeys, noElseReturn, noEmptyCharacterClass, noEmptyPattern, noEqualNull, noExtendNative, noExtraAssignment, noExtraBind, noExtraBooleanCasting, noExtraLabel, noFallThrough, noFloatingDecimal, noFunctionAssignment, noImplicitCoercion, noImplicitGlobal, noImpliedEval, noInnerDeclaration, noInvalidRegExp, noIrregularWhiteSpace, noIterator, noLabel, noLabelVar, noLoneBlock, noLonelyIf, noLoopFunction, // noMagicNumber,
 noMixedRequire, noMixedSpaceAndTab, noMultipleEmptyLine, noMultipleSpace, noMultipleString, noNativeReassignment, noNegatedCondition, noNestedTernary, noNew, noNewFunction, noNewRequire, noNewSymbol, noNewWrapper, noNexObject, noObjectCall, noOctal, noOctalEscape, noPathConcat, noProto, noRedeclare, noRegExSpace, noRestrictedImport, noRestrictedModule, noRestrictedSyntax, noReturnAssignment, noScriptUrl, noSelfAssignment, noSelfCompare, noSequence, noShadowRestrictedName, noSpacedFunction, noSparseArray, noThisBeforeSuper, noThrowLiteral, noTrailingSpace, noUndeededTernary, noUndef, // noUndefined,
-noUndefInit, noUnexpectedMultipleline, noUnmodifiedLoopCondition, noUnreachable, noUnusedExpression, noUnusedLabel, noUnusedVar, noUseBeforeDefine, noUselessCall, noUselessConcat, noUselessConstructor, noVoid, noWhiteSpaceBeforeProperty, noWith, objectCurlySpacing, objectShortHand, oneVar, oneVarDeclarationPerLine, operatorAssignment, operatorLineBreak, paddedBlock, preferConst, preferRestParam, preferSpread, preferTemplate, quoteProp, semi, semiSpacing, spaceAroundInfixOperator, spaceAroundUnaryOperator, spaceBeforeBlock, spaceBeforeFunctionParenthesis, spaceInParenthesis, templateCurlySpacing, useIsNaN, validJSDoc, validTypeOf, wrapIIFE, yieldStarSpacing, yoda];
+noUndefInit, noUnexpectedMultipleline, noUnmodifiedLoopCondition, noUnreachable, noUnusedExpression, noUnusedLabel, noUnusedVar, // noUseBeforeDefine,
+noUselessCall, noUselessConcat, noUselessConstructor, noVoid, noWhiteSpaceBeforeProperty, noWith, objectCurlySpacing, objectShortHand, oneVar, oneVarDeclarationPerLine, operatorAssignment, operatorLineBreak, paddedBlock, preferConst, preferRestParam, preferSpread, preferTemplate, quoteProp, semi, semiSpacing, spaceAroundInfixOperator, spaceAroundUnaryOperator, spaceBeforeBlock, spaceBeforeFunctionParenthesis, spaceInParenthesis, templateCurlySpacing, useIsNaN, validJSDoc, validTypeOf, wrapIIFE, yieldStarSpacing, yoda];
 
 // rules conflicting with prettier
 const prettierConflictArray = [arrowParenthesis, arrowSpacing, // blockSpacing,
