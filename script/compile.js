@@ -1,6 +1,5 @@
 const { rollup } = require("rollup")
 const babel = require("rollup-plugin-babel")
-const nodeResolve = require("rollup-plugin-node-resolve")
 const path = require("path")
 
 const root = path.resolve(__dirname, "../")
@@ -11,7 +10,6 @@ const compile = async () => {
   const bundle = await rollup({
     input: inputFile,
     plugins: [
-      nodeResolve(),
       babel({
         babelrc: false,
         exclude: "node_modules/**",

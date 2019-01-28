@@ -1,3 +1,4 @@
+import path from "path"
 import { rules } from "./rules/index.js"
 import { importPlugin } from "./plugins/index.js"
 
@@ -30,6 +31,8 @@ const ruleArrayToRuleMap = (ruleArray) => {
   return ruleMap
 }
 
+const root = path.resolve(__dirname, "../")
+const babelConfigFile = `${root}/babel.config.js`
 export const config = {
   parser: "babel-eslint",
   parserOptions: {
@@ -46,6 +49,9 @@ export const config = {
     requireConfigFile: false,
     // https://babeljs.io/docs/en/options#parseropts
     allowAwaitOutsideFunction: true,
+    babelOptions: {
+      configFile: babelConfigFile,
+    },
   },
   plugins: [importPlugin.name],
   settings: {

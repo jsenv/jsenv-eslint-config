@@ -2,6 +2,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var path = _interopDefault(require('path'));
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -800,6 +804,8 @@ const ruleArrayToRuleMap = ruleArray => {
   return ruleMap;
 };
 
+const root = path.resolve(__dirname, "../");
+const babelConfigFile = `${root}/babel.config.js`;
 const config = {
   parser: "babel-eslint",
   parserOptions: {
@@ -815,7 +821,10 @@ const config = {
     },
     requireConfigFile: false,
     // https://babeljs.io/docs/en/options#parseropts
-    allowAwaitOutsideFunction: true
+    allowAwaitOutsideFunction: true,
+    babelOptions: {
+      configFile: babelConfigFile
+    }
   },
   plugins: [plugin.name],
   settings: {
