@@ -43,6 +43,9 @@ export const config = {
       destructuring: true,
       objectLiteralShorthandMethods: true,
     },
+    requireConfigFile: false,
+    // https://babeljs.io/docs/en/options#parseropts
+    allowAwaitOutsideFunction: true,
   },
   plugins: [importPlugin.name],
   settings: {
