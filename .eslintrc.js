@@ -1,1 +1,1 @@
-module.exports = require("./dist/index.js").config
+module.exports = require("./dist/index.js").createConfig()

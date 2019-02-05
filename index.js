@@ -1,1 +1,1 @@
-export * from "./src/eslint.js"
+export { createConfig } from "./src/eslint.js"
