@@ -23,7 +23,6 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/plugin-transform-spread": "7.2.0",
-    "@dmail/prettiest": "1.0.0",
     "@dmail/project-prettier-config": "github:dmail/project-prettier-config",
     "babel-eslint": "github:dmail-fork/babel-eslint#allow-await-outside-function",
     "eslint": "5.10.0",
@@ -36,7 +35,6 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "format": "prettiest",
     "compile": "node ./script/compile.js",
     "clean": "rimraf dist",
     "dist": "npm run clean && npm run compile",
