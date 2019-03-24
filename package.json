@@ -1,25 +1,30 @@
 {
-  "name": "@dmail/project-eslint-config",
+  "name": "@jsenv/eslint-config",
   "version": "7.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dmail/project-eslint-config"
+    "url": "https://github.com/jsenv/jsenv-eslint-config"
   },
   "publishConfig": {
     "access": "public"
   },
   "main": "dist/index.js",
   "module": "index.js",
-  "files": ["dist", "src", "babel.config.js"],
+  "files": [
+    "dist",
+    "src",
+    "babel.config.js"
+  ],
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0"
   },
   "devDependencies": {
+    "@babel/core": "7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "7.2.0",
     "@babel/plugin-transform-spread": "7.2.0",
-    "@dmail/project-prettier-config": "github:dmail/project-prettier-config",
+    "@jsenv/prettier-config": "1.0.0",
     "babel-eslint": "11.0.0-beta.0",
     "eslint": "5.10.0",
     "eslint-plugin-import": "2.6.0",
