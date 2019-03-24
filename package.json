@@ -1,6 +1,6 @@
 {
   "name": "@jsenv/eslint-config",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,8 +12,9 @@
   "main": "dist/index.js",
   "module": "index.js",
   "files": [
-    "dist",
+    "index.js",
     "src",
+    "dist",
     "babel.config.js"
   ],
   "dependencies": {
