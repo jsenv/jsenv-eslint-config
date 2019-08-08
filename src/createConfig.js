@@ -9,8 +9,9 @@ const root = resolve(__dirname, "../../")
 
 export const createConfig = ({
   projectPath,
+  importMapRelativePath,
+  importResolutionMethod,
   prettierEnabled = true,
-  importPluginEnabled = true,
   jsxEnabled = false,
   reactPluginEnabled = false,
   reactPluginSettings = {},
@@ -62,21 +63,31 @@ export const createConfig = ({
     config.settings.extensions.push(".jsx")
   }
 
-  if (importPluginEnabled) {
-    if (typeof projectPath !== "string") {
-      throw new TypeError(`projectPath must be a string, got ${projectPath}`)
-    }
-
+  if (importResolutionMethod) {
     config.plugins.push("import")
-    config.settings.import = {
-      "import/resolver": {
-        [import.meta.require.resolve("@jsenv/eslint-import-resolver")]: {
-          projectPath,
+
+    if (importResolutionMethod === "import-map") {
+      if (typeof projectPath !== "string") {
+        throw new TypeError(`projectPath must be a string, got ${projectPath}`)
+      }
+      config.settings.import = {
+        "import/resolver": {
+          [import.meta.require.resolve("@jsenv/eslint-import-resolver")]: {
+            projectPath,
+            importMapRelativePath,
+          },
         },
-      },
+      }
+    } else if (importResolutionMethod === "node") {
+      config.settings.import = {
+        "import/resolver": { node: {} },
+      }
+    } else {
+      throw new Error(`unexpected importResolutionMethod, got ${importResolutionMethod}`)
     }
-    Object.assign(config.rules, ruleMapToStandardRuleMap(importPluginRuleMap))
   }
+
+  Object.assign(config.rules, ruleMapToStandardRuleMap(importPluginRuleMap))
 
   if (reactPluginEnabled) {
     config.plugins.push("react")
