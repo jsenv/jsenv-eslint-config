@@ -1,10 +1,10 @@
-import path from "path"
-import { rules } from "./rules/index.js"
-import { importPlugin } from "./plugins/index.js"
+import { resolve } from "path"
+import { rules } from "./rules.js"
+import { createImportPlugin } from "./import-plugin/createImportPlugin.js"
 
-const root = path.resolve(__dirname, "../")
+const root = resolve(__dirname, "../")
 
-export const createConfig = () => {
+export const createConfig = ({ projectPath, importPluginEnabled = true, jsxEnabled = true }) => {
   const babelConfigFile = `${root}/babel.config.js`
 
   const config = {
@@ -13,7 +13,6 @@ export const createConfig = () => {
       ecmaVersion: 2018,
       sourceType: "module",
       ecmaFeatures: {
-        jsx: true,
         spread: true,
         restParams: true,
         defaultParams: true,
@@ -27,9 +26,9 @@ export const createConfig = () => {
         configFile: babelConfigFile,
       },
     },
-    plugins: [importPlugin.name],
+    plugins: [],
     settings: {
-      [importPlugin.name]: importPlugin.settings,
+      extensions: [".js"],
     },
     env: {
       browser: true,
@@ -38,37 +37,42 @@ export const createConfig = () => {
     },
     // array of object makes things more complex
     // we should use a map of object as eslint does naturally
-    rules: ruleArrayToRuleMap([...rules, ...importPlugin.rules]),
+    rules: rulesToStandardRules(rules),
+  }
+
+  if (jsxEnabled) {
+    config.parserOptions.ecmaFeatures.jsx = true
+    config.settings.extensions.push(".jsx")
+  }
+
+  if (importPluginEnabled) {
+    const importPlugin = createImportPlugin({ projectPath })
+    config.plugins.push(importPlugin.name)
+    config.settings[importPlugin.name] = importPlugin.settings
+    Object.assign(config.rules, rulesToStandardRules(importPlugin.rules))
   }
 
   return config
 }
 
-const eslintRuleToStandardFormat = ({
-  name,
-  severity = "error",
-  disabled = false,
-  options = [],
-  ...rest
-}) => {
-  if (severity !== "error" && severity !== "warn") {
-    throw new Error(`rule severity must be "error" or "warn", got ${severity} for ${name}`)
-  }
+const rulesToStandardRules = (rules) => {
+  const standardRules = {}
 
-  const extraProperties = Object.keys(rest)
-  if (extraProperties.length > 0) {
-    throw new Error(`unexpected rule properties: ${extraProperties}`)
-  }
+  Object.keys(rules).forEach((name) => {
+    const rule = rules[name]
 
-  return [disabled ? "off" : severity, ...options]
-}
+    const { severity = "error", disabled = false, options = [], ...rest } = rule
 
-const ruleArrayToRuleMap = (ruleArray) => {
-  const ruleMap = {}
+    if (severity !== "error" && severity !== "warn") {
+      throw new Error(`rule severity must be "error" or "warn", got ${severity} for ${name}`)
+    }
+    const extraProperties = Object.keys(rest)
+    if (extraProperties.length > 0) {
+      throw new Error(`unexpected rule properties: ${extraProperties}`)
+    }
 
-  ruleArray.forEach((rule) => {
-    ruleMap[rule.name] = eslintRuleToStandardFormat(rule)
+    standardRules[name] = [disabled ? "off" : severity, ...options]
   })
 
-  return ruleMap
+  return standardRules
 }
