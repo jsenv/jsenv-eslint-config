@@ -18,87 +18,92 @@ export const createConfig = ({
 }) => {
   const babelConfigFile = `${root}/babel.config.js`
 
-  const config = {
-    parser: "babel-eslint",
-    parserOptions: {
-      ecmaVersion: 2018,
-      sourceType: "module",
-      ecmaFeatures: {
-        spread: true,
-        restParams: true,
-        defaultParams: true,
-        destructuring: true,
-        objectLiteralShorthandMethods: true,
-      },
-      requireConfigFile: false,
-      // https://babeljs.io/docs/en/options#parseropts
-      allowAwaitOutsideFunction: true,
-      babelOptions: {
-        configFile: babelConfigFile,
-      },
+  const parserOptions = {
+    ecmaVersion: 2018,
+    sourceType: "module",
+    ecmaFeatures: {
+      spread: true,
+      restParams: true,
+      defaultParams: true,
+      destructuring: true,
+      objectLiteralShorthandMethods: true,
     },
-    plugins: [],
-    settings: {
-      extensions: [".js"],
+    requireConfigFile: false,
+    // https://babeljs.io/docs/en/options#parseropts
+    allowAwaitOutsideFunction: true,
+    babelOptions: {
+      configFile: babelConfigFile,
     },
-    env: {
-      browser: true,
-      node: true,
-      es6: true,
-    },
-    rules: ruleMapToStandardRuleMap(ruleMap),
   }
 
-  if (prettierEnabled) {
-    eslintRuleNameHandledByPrettierArray.forEach((ruleName) => {
-      if (!ruleName in config.rules) {
-        throw new Error(`unknow rule name ${ruleName}`)
-      }
-      config.rules[ruleName][0] = "off"
-    })
+  const rules = ruleMapToStandardRuleMap(ruleMap)
+
+  const settings = {
+    extensions: [".js"],
   }
+
+  const plugins = []
 
   if (jsxEnabled) {
-    config.parserOptions.ecmaFeatures.jsx = true
-    config.settings.extensions.push(".jsx")
+    parserOptions.ecmaFeatures.jsx = true
+    settings.extensions.push(".jsx")
   }
 
   if (importResolutionMethod) {
-    config.plugins.push("import")
+    plugins.push("import")
+    Object.assign(rules, ruleMapToStandardRuleMap(importPluginRuleMap))
 
     if (importResolutionMethod === "import-map") {
       if (typeof projectPath !== "string") {
         throw new TypeError(`projectPath must be a string, got ${projectPath}`)
       }
-      config.settings.import = {
+      Object.assign(settings, {
         "import/resolver": {
           [import.meta.require.resolve("@jsenv/eslint-import-resolver")]: {
             projectPath,
             importMapRelativePath,
           },
         },
-      }
+      })
     } else if (importResolutionMethod === "node") {
-      config.settings.import = {
+      Object.assign(settings, {
         "import/resolver": { node: {} },
-      }
+      })
     } else {
       throw new Error(`unexpected importResolutionMethod, got ${importResolutionMethod}`)
     }
   }
 
-  Object.assign(config.rules, ruleMapToStandardRuleMap(importPluginRuleMap))
-
   if (reactPluginEnabled) {
-    config.plugins.push("react")
-    config.settings.react = {
+    plugins.push("react")
+    settings.react = {
       version: "detect",
       ...reactPluginSettings,
     }
-    Object.assign(config.rules, ruleMapToStandardRuleMap(reactPluginRuleMap))
+    Object.assign(rules, ruleMapToStandardRuleMap(reactPluginRuleMap))
   }
 
-  return config
+  if (prettierEnabled) {
+    eslintRuleNameHandledByPrettierArray.forEach((ruleName) => {
+      if (!ruleName in rules) {
+        throw new Error(`unknow rule name ${ruleName}`)
+      }
+      rules[ruleName][0] = "off"
+    })
+  }
+
+  return {
+    parser: "babel-eslint",
+    parserOptions,
+    env: {
+      browser: true,
+      node: true,
+      es6: true,
+    },
+    settings,
+    rules,
+    plugins,
+  }
 }
 
 const ruleMapToStandardRuleMap = (ruleMap) => {

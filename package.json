@@ -1,6 +1,6 @@
 {
   "name": "@jsenv/eslint-config",
-  "version": "9.5.0",
+  "version": "9.7.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -35,14 +35,15 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/plugin-syntax-jsx": "7.2.0",
-    "@jsenv/eslint-import-resolver": "4.8.0"
+    "@jsenv/eslint-import-resolver": "4.9.0"
   },
   "devDependencies": {
     "@jsenv/bundling": "1.12.0",
-    "@jsenv/eslint-config": "8.0.0",
+    "@jsenv/eslint-config": "9.6.0",
     "@jsenv/prettier-config": "1.0.0",
     "@jsenv/prettier-check-project": "3.1.0",
     "@jsenv/node-module-import-map": "3.0.0",
+    "react": "16.8.6",
     "eslint": "5.10.0",
     "prettier": "1.18.2",
     "rimraf": "2.6.2"
