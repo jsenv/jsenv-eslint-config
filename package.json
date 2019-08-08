@@ -1,6 +1,6 @@
 {
   "name": "@jsenv/eslint-config",
-  "version": "9.4.0",
+  "version": "9.5.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/plugin-syntax-jsx": "7.2.0",
-    "@jsenv/eslint-import-resolver": "4.7.0"
+    "@jsenv/eslint-import-resolver": "4.8.0"
   },
   "devDependencies": {
     "@jsenv/bundling": "1.12.0",
