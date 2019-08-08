@@ -80,7 +80,10 @@ export const createConfig = ({
 
   if (reactPluginEnabled) {
     config.plugins.push("react")
-    config.settings.react = reactPluginSettings
+    config.settings.react = {
+      version: "detect",
+      ...reactPluginSettings,
+    }
     Object.assign(config.rules, ruleMapToStandardRuleMap(reactPluginRuleMap))
   }
 
