@@ -1,10 +1,15 @@
 import { resolve } from "path"
 import { rules } from "./rules.js"
+import { eslintRuleNameHandledByPrettierArray } from "./eslintRuleNameHandledByPrettierArray.js"
 import { createImportPlugin } from "./import-plugin/createImportPlugin.js"
 
 const root = resolve(__dirname, "../")
-
-export const createConfig = ({ projectPath, importPluginEnabled = true, jsxEnabled = true }) => {
+export const createConfig = ({
+  projectPath,
+  prettierEnabled = true,
+  importPluginEnabled = true,
+  jsxEnabled = true,
+}) => {
   const babelConfigFile = `${root}/babel.config.js`
 
   const config = {
@@ -35,9 +40,16 @@ export const createConfig = ({ projectPath, importPluginEnabled = true, jsxEnabl
       node: true,
       es6: true,
     },
-    // array of object makes things more complex
-    // we should use a map of object as eslint does naturally
     rules: rulesToStandardRules(rules),
+  }
+
+  if (prettierEnabled) {
+    eslintRuleNameHandledByPrettierArray.forEach((ruleName) => {
+      if (!ruleName in config.rules) {
+        throw new Error(`unknow rule name ${ruleName}`)
+      }
+      config.rules[ruleName][0] = "off"
+    })
   }
 
   if (jsxEnabled) {
