@@ -4,7 +4,9 @@ import { eslintRuleNameHandledByPrettierArray } from "./eslintRuleNameHandledByP
 import { importPluginRuleMap } from "./importPluginRuleMap.js"
 import { reactPluginRuleMap } from "./reactPluginRuleMap.js"
 
-const root = resolve(__dirname, "../")
+// ../../ is because this code will executes from dist/commonjs/main.js
+const root = resolve(__dirname, "../../")
+
 export const createConfig = ({
   projectPath,
   prettierEnabled = true,
