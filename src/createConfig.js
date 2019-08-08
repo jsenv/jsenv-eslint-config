@@ -1,14 +1,17 @@
 import { resolve } from "path"
-import { rules } from "./rules.js"
+import { ruleMap } from "./ruleMap.js"
 import { eslintRuleNameHandledByPrettierArray } from "./eslintRuleNameHandledByPrettierArray.js"
-import { createImportPlugin } from "./import-plugin/createImportPlugin.js"
+import { importPluginRuleMap } from "./importPluginRuleMap.js"
+import { reactPluginRuleMap } from "./reactPluginRuleMap.js"
 
 const root = resolve(__dirname, "../")
 export const createConfig = ({
   projectPath,
   prettierEnabled = true,
   importPluginEnabled = true,
-  jsxEnabled = true,
+  jsxEnabled = false,
+  reactPluginEnabled = false,
+  reactPluginSettings = {},
 }) => {
   const babelConfigFile = `${root}/babel.config.js`
 
@@ -40,7 +43,7 @@ export const createConfig = ({
       node: true,
       es6: true,
     },
-    rules: rulesToStandardRules(rules),
+    rules: ruleMapToStandardRuleMap(ruleMap),
   }
 
   if (prettierEnabled) {
@@ -58,20 +61,35 @@ export const createConfig = ({
   }
 
   if (importPluginEnabled) {
-    const importPlugin = createImportPlugin({ projectPath })
-    config.plugins.push(importPlugin.name)
-    config.settings[importPlugin.name] = importPlugin.settings
-    Object.assign(config.rules, rulesToStandardRules(importPlugin.rules))
+    if (typeof projectPath !== "string") {
+      throw new TypeError(`projectPath must be a string, got ${projectPath}`)
+    }
+
+    config.plugins.push("import")
+    config.settings.import = {
+      "import/resolver": {
+        [import.meta.require.resolve("@jsenv/eslint-import-resolver")]: {
+          projectPath,
+        },
+      },
+    }
+    Object.assign(config.rules, ruleMapToStandardRuleMap(importPluginRuleMap))
+  }
+
+  if (reactPluginEnabled) {
+    config.plugins.push("react")
+    config.settings.react = reactPluginSettings
+    Object.assign(config.rules, ruleMapToStandardRuleMap(reactPluginRuleMap))
   }
 
   return config
 }
 
-const rulesToStandardRules = (rules) => {
-  const standardRules = {}
+const ruleMapToStandardRuleMap = (ruleMap) => {
+  const standardRuleMap = {}
 
-  Object.keys(rules).forEach((name) => {
-    const rule = rules[name]
+  Object.keys(ruleMap).forEach((name) => {
+    const rule = ruleMap[name]
 
     const { severity = "error", disabled = false, options = [], ...rest } = rule
 
@@ -80,11 +98,11 @@ const rulesToStandardRules = (rules) => {
     }
     const extraProperties = Object.keys(rest)
     if (extraProperties.length > 0) {
-      throw new Error(`unexpected rule properties: ${extraProperties}`)
+      throw new Error(`unexpected rule properties: ${extraProperties} on ${name}`)
     }
 
-    standardRules[name] = [disabled ? "off" : severity, ...options]
+    standardRuleMap[name] = [disabled ? "off" : severity, ...options]
   })
 
-  return standardRules
+  return standardRuleMap
 }

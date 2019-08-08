@@ -1,6 +1,6 @@
 // https://eslint.org/docs/rules/
 
-export const rules = {
+export const ruleMap = {
   "accessor-pairs": {},
   "array-bracket-spacing": {
     options: ["never"],
