@@ -51,6 +51,7 @@
     "@jsenv/prettier-config": "1.0.0",
     "@jsenv/prettier-check-project": "3.2.0",
     "@jsenv/node-module-import-map": "3.2.0",
+    "@jsenv/codecov-upload": "1.7.0",
     "react": "16.9.0",
     "eslint": "6.2.1",
     "prettier": "1.18.2",

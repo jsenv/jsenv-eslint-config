@@ -155,7 +155,8 @@ export const ruleMap = {
     // so when it's used it's always for a good reason
     // disabled: true
     // but in fact it's better to disabled the rule locally using
-    // eslint-disable-next-line no-eval in that case
+    // eslint-disable-next-line no-eval
+    // in that case
   },
   "no-fallthrough": {},
   "no-floating-decimal": {},
