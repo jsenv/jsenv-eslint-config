@@ -1,6 +1,6 @@
 {
   "name": "@jsenv/eslint-config",
-  "version": "9.8.0",
+  "version": "9.9.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,37 +14,45 @@
   "files": [
     "/dist/",
     "/src/",
-    "/index.js",
-    "/babel.config.js"
+    "/babel.config.js",
+    "/index.js"
   ],
   "scripts": {
-    "generate-import-map": "node ./script/generate-import-map/generate-import-map.js",
+    "test": "node ./script/test/test.js",
     "eslint-check": "eslint .",
     "prettier-check": "node ./script/prettier-check/prettier-check.js",
+    "generate-coverage": "node ./script/generate-coverage/generate-coverage.js",
+    "upload-coverage": "node ./script/upload-coverage/upload-coverage.js",
     "generate-commonjs-bundle": "node ./script/generate-commonjs-bundle/generate-commonjs-bundle.js",
+    "generate-import-map": "node ./script/generate-import-map/generate-import-map.js",
     "dist": "npm run clean && npm run generate-commonjs-bundle",
     "clean": "rimraf dist && rimraf coverage",
     "reinstall": "npm run clean && rimraf node_modules && npm install",
-    "prepublishOnly": "npm run dist"
+    "postinstall": "npm run generate-import-map",
+    "prepublishOnly": "node ./script/transform-package/remove-postinstall.js && npm run dist",
+    "postpublish": "node ./script/transform-package/restore-postinstall.js"
   },
   "dependencies": {
-    "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-react": "7.14.3",
-    "babel-eslint": "11.0.0-beta.0",
+    "@jsenv/eslint-import-resolver": "4.10.0",
     "@babel/core": "7.5.5",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/plugin-syntax-jsx": "7.2.0",
-    "@jsenv/eslint-import-resolver": "4.9.0"
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-react": "7.14.3",
+    "babel-eslint": "11.0.0-beta.0"
   },
   "devDependencies": {
-    "@jsenv/bundling": "1.13.0",
-    "@jsenv/eslint-config": "9.7.0",
+    "@jsenv/execution": "1.1.0",
+    "@jsenv/testing": "1.27.0",
+    "@jsenv/node-launcher": "1.18.0",
+    "@jsenv/bundling": "1.15.0",
+    "@jsenv/eslint-config": "9.8.0",
     "@jsenv/prettier-config": "1.0.0",
     "@jsenv/prettier-check-project": "3.2.0",
     "@jsenv/node-module-import-map": "3.2.0",
     "react": "16.9.0",
-    "eslint": "6.2.0",
+    "eslint": "6.2.1",
     "prettier": "1.18.2",
     "rimraf": "3.0.0"
   }
