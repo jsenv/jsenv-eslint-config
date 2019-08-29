@@ -1,6 +1,6 @@
 {
   "name": "@jsenv/eslint-config",
-  "version": "9.9.0",
+  "version": "10.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -33,28 +33,28 @@
     "postpublish": "node ./script/transform-package/restore-postinstall.js"
   },
   "dependencies": {
-    "@jsenv/eslint-import-resolver": "4.10.0",
     "@babel/core": "7.5.5",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/plugin-syntax-jsx": "7.2.0",
+    "@jsenv/eslint-import-resolver": "4.10.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-react": "7.14.3",
     "babel-eslint": "11.0.0-beta.0"
   },
   "devDependencies": {
-    "@jsenv/execution": "1.1.0",
-    "@jsenv/testing": "1.27.0",
-    "@jsenv/node-launcher": "1.18.0",
-    "@jsenv/bundling": "1.15.0",
-    "@jsenv/eslint-config": "9.8.0",
-    "@jsenv/prettier-config": "1.0.0",
-    "@jsenv/prettier-check-project": "3.2.0",
-    "@jsenv/node-module-import-map": "3.2.0",
+    "@jsenv/bundling": "3.1.0",
     "@jsenv/codecov-upload": "1.7.0",
-    "react": "16.9.0",
-    "eslint": "6.2.1",
+    "@jsenv/eslint-config": "9.9.0",
+    "@jsenv/execution": "3.2.0",
+    "@jsenv/node-launcher": "3.2.0",
+    "@jsenv/prettier-config": "1.0.0",
+    "@jsenv/prettier-check-project": "3.3.0",
+    "@jsenv/node-module-import-map": "5.1.0",
+    "@jsenv/testing": "2.3.0",
+    "eslint": "6.2.2",
     "prettier": "1.18.2",
+    "react": "16.9.0",
     "rimraf": "3.0.0"
   }
 }
