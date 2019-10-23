@@ -1,22 +1,26 @@
-import { resolve } from "path"
 import { ruleMap } from "./ruleMap.js"
 import { eslintRuleNameHandledByPrettierArray } from "./eslintRuleNameHandledByPrettierArray.js"
 import { importPluginRuleMap } from "./importPluginRuleMap.js"
 import { reactPluginRuleMap } from "./reactPluginRuleMap.js"
 
-// ../../ is because this code will executes from dist/commonjs/main.js
-const root = resolve(__dirname, "../../")
-
 export const createConfig = ({
   projectPath,
   importMapRelativePath,
   importResolutionMethod,
+  importResolutionResolverPath = import.meta.require.resolve("@jsenv/eslint-import-resolver"),
+  importResolutionResolverOptions = {},
   prettierEnabled = true,
   jsxEnabled = false,
   reactPluginEnabled = false,
   reactPluginSettings = {},
+  browser = true,
+  node = true,
 }) => {
-  const babelConfigFile = `${root}/babel.config.js`
+  const babelConfigFileUrl = import.meta.resolve(
+    // ../../ because this code will executes from dist/commonjs/main.js
+    "../../babel.config.js",
+  )
+  const babelConfigFilePathname = babelConfigFileUrl.slice("file://".length)
 
   const parserOptions = {
     ecmaVersion: 2018,
@@ -32,7 +36,7 @@ export const createConfig = ({
     // https://babeljs.io/docs/en/options#parseropts
     allowAwaitOutsideFunction: true,
     babelOptions: {
-      configFile: babelConfigFile,
+      configFile: babelConfigFilePathname,
     },
   }
 
@@ -59,9 +63,12 @@ export const createConfig = ({
       }
       Object.assign(settings, {
         "import/resolver": {
-          [import.meta.require.resolve("@jsenv/eslint-import-resolver")]: {
+          [importResolutionResolverPath]: {
             projectPath,
             importMapRelativePath,
+            browser,
+            node,
+            ...importResolutionResolverOptions,
           },
         },
       })
@@ -96,8 +103,8 @@ export const createConfig = ({
     parser: "babel-eslint",
     parserOptions,
     env: {
-      browser: true,
-      node: true,
+      browser,
+      node,
       es6: true,
     },
     // some globals are misleading and prevent eslint to catch bugs.
