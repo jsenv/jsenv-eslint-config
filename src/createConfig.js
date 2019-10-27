@@ -4,17 +4,17 @@ import { importPluginRuleMap } from "./importPluginRuleMap.js"
 import { reactPluginRuleMap } from "./reactPluginRuleMap.js"
 
 export const createConfig = ({
-  projectPath,
-  importMapRelativePath,
+  projectDirectoryPath,
   importResolutionMethod,
-  importResolutionResolverPath = import.meta.require.resolve("@jsenv/eslint-import-resolver"),
-  importResolutionResolverOptions = {},
+  importMapFileRelativePath,
+  importResolverFilePath = import.meta.require.resolve("@jsenv/eslint-import-resolver"),
+  importResolverOptions = {},
+  browser = true,
+  node = true,
   prettierEnabled = true,
   jsxEnabled = false,
   reactPluginEnabled = false,
   reactPluginSettings = {},
-  browser = true,
-  node = true,
 }) => {
   const babelConfigFileUrl = import.meta.resolve(
     // ../../ because this code will executes from dist/commonjs/main.js
@@ -58,17 +58,17 @@ export const createConfig = ({
     Object.assign(rules, ruleMapToStandardRuleMap(importPluginRuleMap))
 
     if (importResolutionMethod === "import-map") {
-      if (typeof projectPath !== "string") {
-        throw new TypeError(`projectPath must be a string, got ${projectPath}`)
+      if (typeof projectDirectoryPath !== "string") {
+        throw new TypeError(`projectDirectoryPath must be a string, got ${projectDirectoryPath}`)
       }
       Object.assign(settings, {
         "import/resolver": {
-          [importResolutionResolverPath]: {
-            projectPath,
-            importMapRelativePath,
+          [importResolverFilePath]: {
+            projectDirectoryPath,
+            importMapFileRelativePath,
             browser,
             node,
-            ...importResolutionResolverOptions,
+            ...importResolverOptions,
           },
         },
       })
