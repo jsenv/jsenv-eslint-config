@@ -66,6 +66,7 @@ export const createConfig = ({
           [importResolverFilePath]: {
             projectDirectoryPath,
             importMapFileRelativePath,
+            insideProjectAssertion: true,
             browser,
             node,
             ...importResolverOptions,
