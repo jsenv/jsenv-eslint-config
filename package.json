@@ -42,7 +42,7 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/plugin-syntax-jsx": "7.2.0",
-    "@jsenv/eslint-import-resolver": "7.1.0",
+    "@jsenv/importmap-eslint-resolver": "1.0.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-react": "7.16.0",
     "babel-eslint": "11.0.0-beta.0"

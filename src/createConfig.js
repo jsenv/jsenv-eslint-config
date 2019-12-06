@@ -1,13 +1,15 @@
-import { ruleMap } from "./ruleMap.js"
-import { eslintRuleNameHandledByPrettierArray } from "./eslintRuleNameHandledByPrettierArray.js"
-import { importPluginRuleMap } from "./importPluginRuleMap.js"
-import { reactPluginRuleMap } from "./reactPluginRuleMap.js"
+import { urlToFilePath } from "./internal/urlUtils.js"
+import { normalizeDirectoryUrl } from "./internal/normalizeDirectoryUrl.js"
+import { ruleMap } from "./internal/ruleMap.js"
+import { eslintRuleNameHandledByPrettierArray } from "./internal/eslintRuleNameHandledByPrettierArray.js"
+import { importPluginRuleMap } from "./internal/importPluginRuleMap.js"
+import { reactPluginRuleMap } from "./internal/reactPluginRuleMap.js"
 
 export const createConfig = ({
-  projectDirectoryPath,
+  projectDirectoryUrl,
   importResolutionMethod,
-  importMapFileRelativePath,
-  importResolverFilePath = import.meta.require.resolve("@jsenv/eslint-import-resolver"),
+  importMapFileRelativeUrl,
+  importResolverFilePath = import.meta.require.resolve("@jsenv/importmap-eslint-resolver"),
   importResolverOptions = {},
   browser = true,
   node = true,
@@ -20,7 +22,7 @@ export const createConfig = ({
     // ../../ because this code will executes from dist/commonjs/main.js
     "../../babel.config.js",
   )
-  const babelConfigFilePathname = babelConfigFileUrl.slice("file://".length)
+  const babelConfigFilePath = urlToFilePath(babelConfigFileUrl)
 
   const parserOptions = {
     ecmaVersion: 2018,
@@ -36,7 +38,7 @@ export const createConfig = ({
     // https://babeljs.io/docs/en/options#parseropts
     allowAwaitOutsideFunction: true,
     babelOptions: {
-      configFile: babelConfigFilePathname,
+      configFile: babelConfigFilePath,
     },
   }
 
@@ -58,14 +60,12 @@ export const createConfig = ({
     Object.assign(rules, ruleMapToStandardRuleMap(importPluginRuleMap))
 
     if (importResolutionMethod === "import-map") {
-      if (typeof projectDirectoryPath !== "string") {
-        throw new TypeError(`projectDirectoryPath must be a string, got ${projectDirectoryPath}`)
-      }
+      projectDirectoryUrl = normalizeDirectoryUrl(projectDirectoryUrl)
       Object.assign(settings, {
         "import/resolver": {
           [importResolverFilePath]: {
-            projectDirectoryPath,
-            importMapFileRelativePath,
+            projectDirectoryUrl,
+            importMapFileRelativeUrl,
             insideProjectAssertion: true,
             browser,
             node,
