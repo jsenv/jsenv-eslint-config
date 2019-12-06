@@ -21,7 +21,7 @@ export const ruleMap = {
   "brace-style": {
     options: ["stroustrup"],
   },
-  camelcase: {
+  "camelcase": {
     options: [
       {
         properties: "always",
@@ -55,7 +55,7 @@ export const ruleMap = {
   },
   "consistent-return": {},
   "constructor-super": {},
-  curly: {},
+  "curly": {},
   "default-case": {},
   "dot-location": {
     options: ["property"],
@@ -64,7 +64,7 @@ export const ruleMap = {
   "eol-last": {
     disabled: true,
   },
-  eqeqeq: {},
+  "eqeqeq": {},
   "generator-star-spacing": {
     options: ["both"],
   },
@@ -73,7 +73,7 @@ export const ruleMap = {
   "handle-callback-err": {
     severity: "warn",
   },
-  indent: {
+  "indent": {
     // At first I wanted to used 'tab' so that people can choose identation width.
     // They could decide how much space a tab char takes (2, 4, 100) in their environment
     // But it comes with several issue:
@@ -307,7 +307,7 @@ export const ruleMap = {
   "prefer-template": {
     severity: "warn",
   },
-  quote: {
+  "quote": {
     options: [
       "double",
       // double because closer to .json, this it increase compatibility between .js and .json
@@ -328,7 +328,7 @@ export const ruleMap = {
       },
     ],
   },
-  semi: {
+  "semi": {
     options: [
       "never",
       // code is more readable without semicolon and eslint will help
@@ -381,5 +381,5 @@ export const ruleMap = {
   "yield-star-spacing": {
     options: ["both"],
   },
-  yoda: {},
+  "yoda": {},
 }
