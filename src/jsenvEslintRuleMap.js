@@ -1,6 +1,6 @@
 // https://eslint.org/docs/rules/
 
-export const ruleMap = {
+export const jsenvEslintRuleMap = {
   "accessor-pairs": {},
   "array-bracket-spacing": {
     options: ["never"],
@@ -69,19 +69,24 @@ export const ruleMap = {
     options: ["both"],
   },
   "getter-return": {},
+  "grouped-accessor-pairs": {},
   "guard-for-in": {},
   "handle-callback-err": {
     severity: "warn",
   },
   "indent": {
-    // At first I wanted to used 'tab' so that people can choose identation width.
-    // They could decide how much space a tab char takes (2, 4, 100) in their environment
-    // But it comes with several issue:
-    // - By default github will render a tab with 8 spaces
-    // it can be fixed thank to an .editorconfig at the root of the github project (see http://stackoverflow.com/a/33831598)
-    // - A user cannot globally defined how much space a tab should take
-    // it cannot be fixed because it should be an OS preference that browser should follow
-    // Even if tab are thoerically better, in practice spaces are causing less trouble
+    /**
+     * "tab" is theorically a better option so that people can choose identation width.
+     * Because it allow them to decide how much space a tab char takes (2, 4, 100) in their environment
+     * But it comes with several issue:
+     * - By default github will render a tab with 8 spaces
+     * (can be fixed thank to an .editorconfig at the root of the github project (see http://stackoverflow.com/a/33831598)
+     * - A user cannot globally defined how much space a tab should take
+     * In a perfect world it would be an operating system setting that browser
+     * would follow.
+     *
+     * In practice spaces cause less troubles.
+     */
     options: [2, { SwitchCase: 1 }],
   },
   "jsx-quotes": {},
@@ -130,6 +135,7 @@ export const ruleMap = {
   "no-cond-assign": {},
   "no-const-assign": {},
   "no-constant-condition": {},
+  "no-constructor-return": {},
   "no-control-regex": {},
   "no-debugger": {},
   "no-delete-var": {},
@@ -137,6 +143,7 @@ export const ruleMap = {
   "no-dupe-args": {},
   "no-duplicate-case": {},
   "no-dupe-class-members": {},
+  "no-dupe-else-if": {},
   "no-dupe-keys": {},
   "no-else-return": {},
   "no-empty-character-class": {},
@@ -228,6 +235,7 @@ export const ruleMap = {
   "no-return-assign": {
     options: ["always"],
   },
+  "no-setter-return": {},
   "no-script-url": {},
   "no-self-assign": {},
   "no-self-compare": {},
@@ -297,6 +305,10 @@ export const ruleMap = {
   },
   "prefer-const": {
     options: [{ destructuring: "all", ignoreReadBeforeAssign: true }],
+  },
+  "prefer-exponentiation-operator": {
+    // Math.pow is cool, why being so strict ?
+    disabled: true,
   },
   "prefer-rest-params": {
     severity: "warn",
