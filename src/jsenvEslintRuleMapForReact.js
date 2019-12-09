@@ -1,4 +1,4 @@
-export const reactPluginRuleMap = {
+export const jsenvEslintRuleMapForReact = {
   "react/display-name": {},
   "react/jsx-key": {},
   "react/jsx-no-comment-textnodes": {},

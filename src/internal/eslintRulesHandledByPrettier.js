@@ -1,6 +1,6 @@
 // see https://github.com/prettier/eslint-config-prettier/blob/master/index.js
 
-export const eslintRuleNameHandledByPrettierArray = [
+export const eslintRulesHandledByPrettier = [
   "arrow-parens",
   "arrow-spacing",
   "brace-style",

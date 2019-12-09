@@ -28,9 +28,6 @@
       "args": ["${relativeFile}"],
       "autoAttachChildProcesses": true,
       "sourceMaps": true,
-      "sourceMapPathOverrides": {
-        "/*": "${workspaceFolder}/*"
-      },
       "smartStep": true,
       "skipFiles": [
         // force-array-multiline
@@ -47,9 +44,6 @@
       "url": "http://127.0.0.1:3456/${relativeFile}",
       "runtimeArgs": ["--allow-file-access-from-files", "--disable-web-security"],
       "sourceMaps": true,
-      "sourceMapPathOverrides": {
-        "/*": "${workspaceFolder}/*"
-      },
       "smartStep": true,
       "skipFiles": ["node_modules/**", "<node_internals>/**/*.js"]
     },
@@ -60,9 +54,6 @@
       "port": 40000,
       "smartStep": true,
       "sourceMaps": true,
-      "sourceMapPathOverrides": {
-        "/*": "${workspaceFolder}/*"
-      },
       "skipFiles": ["node_modules/**", "<node_internals>/**/*.js"]
     }
   ]

@@ -1,26 +1,31 @@
-import { ruleMap } from "./ruleMap.js"
-import { eslintRuleNameHandledByPrettierArray } from "./eslintRuleNameHandledByPrettierArray.js"
-import { importPluginRuleMap } from "./importPluginRuleMap.js"
-import { reactPluginRuleMap } from "./reactPluginRuleMap.js"
+import { urlToFilePath } from "./internal/urlUtils.js"
+import { normalizeDirectoryUrl } from "./internal/normalizeDirectoryUrl.js"
+import { eslintRulesHandledByPrettier } from "./internal/eslintRulesHandledByPrettier.js"
+import { jsenvEslintRuleMap } from "./jsenvEslintRuleMap.js"
+import { jsenvEslintRuleMapForImport } from "./jsenvEslintRuleMapForImport.js"
+import { jsenvEslintRuleMapForReact } from "./jsenvEslintRuleMapForReact.js"
 
-export const createConfig = ({
-  projectDirectoryPath,
+export const createEslintConfig = ({
+  projectDirectoryUrl,
   importResolutionMethod,
-  importMapFileRelativePath,
-  importResolverFilePath = import.meta.require.resolve("@jsenv/eslint-import-resolver"),
+  importMapFileRelativeUrl,
+  importResolverFilePath = import.meta.require.resolve("@jsenv/importmap-eslint-resolver"),
   importResolverOptions = {},
   browser = true,
   node = true,
-  prettierEnabled = true,
-  jsxEnabled = false,
-  reactPluginEnabled = false,
+  prettier = true,
+  react = false,
   reactPluginSettings = {},
+  jsx = react,
+  eslintRuleMap = jsenvEslintRuleMap,
+  eslintRuleMapForImport = jsenvEslintRuleMapForImport,
+  eslintRuleMapForReact = jsenvEslintRuleMapForReact,
 }) => {
   const babelConfigFileUrl = import.meta.resolve(
     // ../../ because this code will executes from dist/commonjs/main.js
     "../../babel.config.js",
   )
-  const babelConfigFilePathname = babelConfigFileUrl.slice("file://".length)
+  const babelConfigFilePath = urlToFilePath(babelConfigFileUrl)
 
   const parserOptions = {
     ecmaVersion: 2018,
@@ -36,11 +41,11 @@ export const createConfig = ({
     // https://babeljs.io/docs/en/options#parseropts
     allowAwaitOutsideFunction: true,
     babelOptions: {
-      configFile: babelConfigFilePathname,
+      configFile: babelConfigFilePath,
     },
   }
 
-  const rules = ruleMapToStandardRuleMap(ruleMap)
+  const rules = ruleMapToStandardRuleMap(eslintRuleMap)
 
   const settings = {
     extensions: [".js"],
@@ -48,24 +53,17 @@ export const createConfig = ({
 
   const plugins = []
 
-  if (jsxEnabled) {
-    parserOptions.ecmaFeatures.jsx = true
-    settings.extensions.push(".jsx")
-  }
-
   if (importResolutionMethod) {
     plugins.push("import")
-    Object.assign(rules, ruleMapToStandardRuleMap(importPluginRuleMap))
+    Object.assign(rules, ruleMapToStandardRuleMap(eslintRuleMapForImport))
 
     if (importResolutionMethod === "import-map") {
-      if (typeof projectDirectoryPath !== "string") {
-        throw new TypeError(`projectDirectoryPath must be a string, got ${projectDirectoryPath}`)
-      }
+      projectDirectoryUrl = normalizeDirectoryUrl(projectDirectoryUrl)
       Object.assign(settings, {
         "import/resolver": {
           [importResolverFilePath]: {
-            projectDirectoryPath,
-            importMapFileRelativePath,
+            projectDirectoryUrl,
+            importMapFileRelativeUrl,
             insideProjectAssertion: true,
             browser,
             node,
@@ -82,17 +80,22 @@ export const createConfig = ({
     }
   }
 
-  if (reactPluginEnabled) {
+  if (react) {
     plugins.push("react")
     settings.react = {
       version: "detect",
       ...reactPluginSettings,
     }
-    Object.assign(rules, ruleMapToStandardRuleMap(reactPluginRuleMap))
+    Object.assign(rules, ruleMapToStandardRuleMap(eslintRuleMapForReact))
   }
 
-  if (prettierEnabled) {
-    eslintRuleNameHandledByPrettierArray.forEach((ruleName) => {
+  if (jsx) {
+    parserOptions.ecmaFeatures.jsx = true
+    settings.extensions.push(".jsx")
+  }
+
+  if (prettier) {
+    eslintRulesHandledByPrettier.forEach((ruleName) => {
       if (!ruleName in rules) {
         throw new Error(`unknow rule name ${ruleName}`)
       }
