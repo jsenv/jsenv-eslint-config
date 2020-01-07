@@ -1,7 +1,7 @@
 {
   "name": "@jsenv/eslint-config",
   "description": "eslint config used by jsenv codebase",
-  "version": "12.0.0",
+  "version": "12.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",

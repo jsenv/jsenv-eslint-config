@@ -101,6 +101,9 @@ export const jsenvEslintRuleMap = {
   "keyword-spacing": {},
   "linebreak-style": {
     options: ["unix"],
+    // disabled otherwise fails when eslint is runned on windows
+    // after a git clone
+    disabled: true,
   },
   "max-len": {
     options: [
