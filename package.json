@@ -1,7 +1,7 @@
 {
   "name": "@jsenv/eslint-config",
   "description": "eslint config used by jsenv codebase",
-  "version": "12.0.1",
+  "version": "12.1.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -43,7 +43,8 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-syntax-import-meta": "7.2.0",
     "@babel/plugin-syntax-jsx": "7.2.0",
-    "@jsenv/importmap-eslint-resolver": "1.1.0",
+    "@jsenv/importmap-eslint-resolver": "2.0.0",
+    "@jsenv/util": "3.0.0-alpha.1",
     "eslint-plugin-import": "2.19.1",
     "eslint-plugin-react": "7.17.0",
     "babel-eslint": "11.0.0-beta.0"
@@ -51,8 +52,8 @@
   "devDependencies": {
     "@jsenv/assert": "1.1.1",
     "@jsenv/codecov-upload": "3.1.0",
-    "@jsenv/core": "10.4.0",
-    "@jsenv/eslint-config": "12.0.0",
+    "@jsenv/core": "10.5.0-alpha.1",
+    "@jsenv/eslint-config": "12.0.1",
     "@jsenv/github-release-package": "1.1.1",
     "@jsenv/node-module-import-map": "10.0.0",
     "@jsenv/package-publish": "1.2.0",

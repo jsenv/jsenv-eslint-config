@@ -1,5 +1,4 @@
-import { urlToFilePath } from "./internal/urlUtils.js"
-import { normalizeDirectoryUrl } from "./internal/normalizeDirectoryUrl.js"
+import { urlToFileSystemPath, assertAndNormalizeDirectoryUrl } from "@jsenv/util"
 import { eslintRulesHandledByPrettier } from "./internal/eslintRulesHandledByPrettier.js"
 import { jsenvEslintRuleMap } from "./jsenvEslintRuleMap.js"
 import { jsenvEslintRuleMapForImport } from "./jsenvEslintRuleMapForImport.js"
@@ -25,7 +24,7 @@ export const createEslintConfig = ({
     // ../../ because this code will executes from dist/commonjs/main.js
     "../../babel.config.js",
   )
-  const babelConfigFilePath = urlToFilePath(babelConfigFileUrl)
+  const babelConfigFilePath = urlToFileSystemPath(babelConfigFileUrl)
 
   const parserOptions = {
     ecmaVersion: 2018,
@@ -58,7 +57,7 @@ export const createEslintConfig = ({
     Object.assign(rules, ruleMapToStandardRuleMap(eslintRuleMapForImport))
 
     if (importResolutionMethod === "import-map") {
-      projectDirectoryUrl = normalizeDirectoryUrl(projectDirectoryUrl)
+      projectDirectoryUrl = assertAndNormalizeDirectoryUrl(projectDirectoryUrl)
       Object.assign(settings, {
         "import/resolver": {
           [importResolverFilePath]: {
