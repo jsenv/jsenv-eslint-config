@@ -1,14 +1,38 @@
-import { urlToFileSystemPath, assertAndNormalizeDirectoryUrl } from "@jsenv/util"
+import { createRequire } from "module"
+import { resolveUrl, urlToFileSystemPath, assertAndNormalizeDirectoryUrl } from "@jsenv/util"
 import { eslintRulesHandledByPrettier } from "./internal/eslintRulesHandledByPrettier.js"
 import { jsenvEslintRuleMap } from "./jsenvEslintRuleMap.js"
 import { jsenvEslintRuleMapForImport } from "./jsenvEslintRuleMapForImport.js"
 import { jsenvEslintRuleMapForReact } from "./jsenvEslintRuleMapForReact.js"
 
+let importResolverFilePathFallback
+let jsenvEslintConfigDirectoryUrl
+// we are being executed from dist/commonjs/main.cjs (certainly node < 13)
+if (typeof require === "function") {
+  importResolverFilePathFallback = require.resolve("@jsenv/importmap-eslint-resolver")
+  jsenvEslintConfigDirectoryUrl = resolveUrl(
+    // remove dist/commonjs/
+    "../../",
+    import.meta.url,
+  )
+} else {
+  importResolverFilePathFallback = createRequire(import.meta.url).resolve(
+    "@jsenv/importmap-eslint-resolver",
+  )
+  jsenvEslintConfigDirectoryUrl = resolveUrl(
+    // remove src/
+    "../",
+    import.meta.url,
+  )
+}
+const babelConfigFileUrl = resolveUrl("babel.config.js", jsenvEslintConfigDirectoryUrl)
+const babelConfigFilePath = urlToFileSystemPath(babelConfigFileUrl)
+
 export const createEslintConfig = ({
   projectDirectoryUrl,
   importResolutionMethod,
   importMapFileRelativeUrl,
-  importResolverFilePath = import.meta.require.resolve("@jsenv/importmap-eslint-resolver"),
+  importResolverFilePath = importResolverFilePathFallback,
   importResolverOptions = {},
   browser = true,
   node = true,
@@ -20,11 +44,7 @@ export const createEslintConfig = ({
   eslintRuleMapForImport = jsenvEslintRuleMapForImport,
   eslintRuleMapForReact = jsenvEslintRuleMapForReact,
 }) => {
-  const babelConfigFileUrl = import.meta.resolve(
-    // ../../ because this code will executes from dist/commonjs/main.js
-    "../../babel.config.js",
-  )
-  const babelConfigFilePath = urlToFileSystemPath(babelConfigFileUrl)
+  // it depends, what if this file is executed from its current location ?
 
   const parserOptions = {
     ecmaVersion: 2018,
