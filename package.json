@@ -1,7 +1,7 @@
 {
   "name": "@jsenv/eslint-config",
   "description": "eslint config used by jsenv codebase",
-  "version": "12.2.0",
+  "version": "12.2.0-alpha.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -57,7 +57,8 @@
     "@jsenv/assert": "1.2.1",
     "@jsenv/codecov-upload": "3.1.0",
     "@jsenv/core": "10.6.0-alpha.0",
-    "@jsenv/eslint-config": "12.1.0",
+    "@jsenv/eslint-config": "12.2.0-alpha.0",
+    "@jsenv/git-hooks": "1.2.0",
     "@jsenv/github-release-package": "1.1.1",
     "@jsenv/node-module-import-map": "10.1.0",
     "@jsenv/package-publish": "1.4.0",
