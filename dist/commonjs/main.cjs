@@ -9,7 +9,7 @@ require('crypto');
 require('path');
 var util = require('util');
 
-// eslint-disable-next-line import/no-unresolved
+/* global require, __filename */
 const nodeRequire = require;
 const filenameContainsBackSlashes = __filename.indexOf("\\") > -1;
 const url = filenameContainsBackSlashes ? `file:///${__filename.replace(/\\/g, "/")}` : `file://${__filename}`;
@@ -570,7 +570,7 @@ if (typeof require === "function") {
   "../", url);
 }
 
-const babelConfigFileUrl = resolveUrl("babel.config.js", jsenvEslintConfigDirectoryUrl);
+const babelConfigFileUrl = resolveUrl("babel.config.cjs", jsenvEslintConfigDirectoryUrl);
 const babelConfigFilePath = urlToFileSystemPath(babelConfigFileUrl);
 const createEslintConfig = ({
   projectDirectoryUrl,
