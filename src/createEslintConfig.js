@@ -25,7 +25,7 @@ if (typeof require === "function") {
     import.meta.url,
   )
 }
-const babelConfigFileUrl = resolveUrl("babel.config.js", jsenvEslintConfigDirectoryUrl)
+const babelConfigFileUrl = resolveUrl("babel.config.cjs", jsenvEslintConfigDirectoryUrl)
 const babelConfigFilePath = urlToFileSystemPath(babelConfigFileUrl)
 
 export const createEslintConfig = ({
