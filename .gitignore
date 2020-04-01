@@ -1,8 +1,8 @@
+/.github/release/node_modules/
+/.github/release/package-lock.json
 /.jsenv/
 /coverage/
-/dist/importMap.json
 /node_modules/
-/importMap.json
 /jsconfig.json
 /package-lock.json
 /secrets.json
