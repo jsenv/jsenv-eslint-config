@@ -53,8 +53,8 @@
     "@jsenv/importmap-eslint-resolver": "2.3.0",
     "@jsenv/util": "3.6.3",
     "babel-eslint": "11.0.0-beta.0",
-    "eslint-plugin-import": "2.22.0",
-    "eslint-plugin-react": "7.20.3"
+    "eslint-plugin-html": "6.1.0",
+    "eslint-plugin-import": "2.22.0"
   },
   "devDependencies": {
     "@jsenv/assert": "2.2.1",
@@ -66,6 +66,7 @@
     "@jsenv/package-publish": "1.5.1",
     "@jsenv/prettier-check-project": "5.6.0",
     "@jsenv/prettier-config": "1.2.0",
+    "eslint-plugin-react": "7.20.3",
     "eslint": "7.4.0",
     "prettier": "2.0.5"
   }
