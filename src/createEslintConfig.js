@@ -37,6 +37,7 @@ export const createEslintConfig = ({
   browser = true,
   node = true,
   prettier = true,
+  html = true,
   react = false,
   reactPluginSettings = {},
   jsx = react,
@@ -97,6 +98,11 @@ export const createEslintConfig = ({
     } else {
       throw new Error(`unexpected importResolutionMethod, got ${importResolutionMethod}`)
     }
+  }
+
+  if (html) {
+    plugins.push("html")
+    settings.extensions.push(".html")
   }
 
   if (react) {

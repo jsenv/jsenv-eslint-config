@@ -6,3 +6,13 @@ eslint config used by jsenv codebase.
 [![npm package](https://img.shields.io/npm/v/@jsenv/eslint-config.svg?logo=npm&label=package)](https://www.npmjs.com/package/@jsenv/eslint-config)
 [![github ci](https://github.com/jsenv/jsenv-eslint-config/workflows/ci/badge.svg)](https://github.com/jsenv/jsenv-eslint-config/actions?workflow=ci)
 [![codecov coverage](https://codecov.io/gh/jsenv/jsenv-eslint-config/branch/master/graph/badge.svg)](https://codecov.io/gh/jsenv/jsenv-eslint-config)
+
+## Enable eslint for html files in VsCode
+
+Add
+
+```json
+"eslint.validate": ["javascript", "html"]
+```
+
+In VsCode settings.json.
