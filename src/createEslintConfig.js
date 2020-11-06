@@ -129,7 +129,7 @@ export const createEslintConfig = ({
   }
 
   return {
-    parser: "babel-eslint",
+    parser: "@babel/eslint-parser",
     parserOptions,
     env: {
       browser,
