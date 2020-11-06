@@ -1,4 +1,4 @@
-const { createEslintConfig } = require("@jsenv/eslint-config")
+const { createEslintConfig } = require("./dist/commonjs/main.cjs")
 
 const config = createEslintConfig({
   projectDirectoryUrl: __dirname,
