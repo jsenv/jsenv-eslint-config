@@ -1,7 +1,7 @@
 {
   "name": "@jsenv/eslint-config",
   "description": "eslint config used by jsenv codebase.",
-  "version": "12.6.0",
+  "version": "12.7.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -44,29 +44,28 @@
     "postpublish": "node ./script/transform-package/restore-postinstall.js"
   },
   "dependencies": {
-    "@babel/core": "7.11.6",
+    "@babel/core": "7.12.3",
+    "@babel/eslint-parser": "7.12.1",
     "@babel/plugin-syntax-dynamic-import": "7.8.3",
     "@babel/plugin-syntax-import-meta": "7.10.4",
-    "@babel/plugin-syntax-jsx": "7.10.4",
+    "@babel/plugin-syntax-jsx": "7.12.1",
     "@babel/plugin-syntax-numeric-separator": "7.10.4",
-    "@jsenv/importmap-eslint-resolver": "2.3.0",
-    "@jsenv/util": "3.9.0",
-    "babel-eslint": "11.0.0-beta.0",
+    "@jsenv/importmap-eslint-resolver": "2.3.1",
+    "@jsenv/util": "3.10.0",
     "eslint-plugin-html": "6.1.0",
     "eslint-plugin-import": "2.22.1"
   },
   "devDependencies": {
     "@jsenv/assert": "2.2.1",
     "@jsenv/codecov-upload": "3.4.2",
-    "@jsenv/core": "15.1.0",
-    "@jsenv/eslint-config": "12.6.0-alpha.0",
+    "@jsenv/core": "16.5.1",
     "@jsenv/github-release-package": "1.2.2",
-    "@jsenv/node-module-import-map": "12.1.0",
+    "@jsenv/node-module-import-map": "12.2.0",
     "@jsenv/package-publish": "1.5.1",
     "@jsenv/prettier-check-project": "5.6.1",
     "@jsenv/prettier-config": "1.2.0",
-    "eslint-plugin-react": "7.21.4",
-    "eslint": "7.11.0",
+    "eslint-plugin-react": "7.21.5",
+    "eslint": "7.12.1",
     "prettier": "2.1.2"
   }
 }
