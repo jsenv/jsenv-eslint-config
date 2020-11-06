@@ -3,104 +3,11 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var module$1 = require('module');
-var url$1 = require('url');
-var fs = require('fs');
-require('crypto');
-require('path');
-var util = require('util');
+var util = require('@jsenv/util');
 
-/* global require, __filename */
-const nodeRequire = require;
+/* global __filename */
 const filenameContainsBackSlashes = __filename.indexOf("\\") > -1;
 const url = filenameContainsBackSlashes ? `file:///${__filename.replace(/\\/g, "/")}` : `file://${__filename}`;
-
-const ensureUrlTrailingSlash = url => {
-  return url.endsWith("/") ? url : `${url}/`;
-};
-
-const isFileSystemPath = value => {
-  if (typeof value !== "string") {
-    throw new TypeError(`isFileSystemPath first arg must be a string, got ${value}`);
-  }
-
-  if (value[0] === "/") return true;
-  return startsWithWindowsDriveLetter(value);
-};
-
-const startsWithWindowsDriveLetter = string => {
-  const firstChar = string[0];
-  if (!/[a-zA-Z]/.test(firstChar)) return false;
-  const secondChar = string[1];
-  if (secondChar !== ":") return false;
-  return true;
-};
-
-const fileSystemPathToUrl = value => {
-  if (!isFileSystemPath(value)) {
-    throw new Error(`received an invalid value for fileSystemPath: ${value}`);
-  }
-
-  return String(url$1.pathToFileURL(value));
-};
-
-const assertAndNormalizeDirectoryUrl = value => {
-  let urlString;
-
-  if (value instanceof URL) {
-    urlString = value.href;
-  } else if (typeof value === "string") {
-    if (isFileSystemPath(value)) {
-      urlString = fileSystemPathToUrl(value);
-    } else {
-      try {
-        urlString = String(new URL(value));
-      } catch (e) {
-        throw new TypeError(`directoryUrl must be a valid url, received ${value}`);
-      }
-    }
-  } else {
-    throw new TypeError(`directoryUrl must be a string or an url, received ${value}`);
-  }
-
-  if (!urlString.startsWith("file://")) {
-    throw new Error(`directoryUrl must starts with file://, received ${value}`);
-  }
-
-  return ensureUrlTrailingSlash(urlString);
-};
-
-const urlToFileSystemPath = fileUrl => {
-  if (fileUrl[fileUrl.length - 1] === "/") {
-    // remove trailing / so that nodejs path becomes predictable otherwise it logs
-    // the trailing slash on linux but does not on windows
-    fileUrl = fileUrl.slice(0, -1);
-  }
-
-  const fileSystemPath = url$1.fileURLToPath(fileUrl);
-  return fileSystemPath;
-};
-
-const isWindows = process.platform === "win32";
-
-const resolveUrl = (specifier, baseUrl) => {
-  if (typeof baseUrl === "undefined") {
-    throw new TypeError(`baseUrl missing to resolve ${specifier}`);
-  }
-
-  return String(new URL(specifier, baseUrl));
-};
-
-const isWindows$1 = process.platform === "win32";
-const baseUrlFallback = fileSystemPathToUrl(process.cwd());
-
-const isWindows$2 = process.platform === "win32";
-
-const readFilePromisified = util.promisify(fs.readFile);
-
-const isWindows$3 = process.platform === "win32";
-
-/* eslint-disable import/max-dependencies */
-const isLinux = process.platform === "linux"; // linux does not support recursive option
 
 // see https://github.com/prettier/eslint-config-prettier/blob/master/index.js
 const eslintRulesHandledByPrettier = ["arrow-parens", "arrow-spacing", "brace-style", "comma-dangle", "comma-style", "computed-property-spacing", "curly", "dot-location", "eol-last", "generator-star-spacing", "indent", "jsx-quotes", "key-spacing", "keyword-spacing", "max-len", "no-extra-semi", "no-floating-decimal", "no-mixed-spaces-and-tabs", "no-multi-spaces", "no-multi-str", "no-multiple-empty-lines", "no-trailing-spaces", "no-unexpected-multiline", "no-whitespace-before-property", "object-curly-spacing", "one-var-declaration-per-line", "operator-linebreak", "padded-blocks", "quote", "quote-props", "semi", "semi-spacing", "space-before-blocks", "space-before-function-paren", "space-in-parens", "space-infix-ops", "template-curly-spacing", "wrap-iife", "yield-star-spacing"];
@@ -562,16 +469,16 @@ let jsenvEslintConfigDirectoryUrl; // we are being executed from dist/commonjs/m
 
 if (typeof require === "function") {
   importResolverFilePathFallback = require.resolve("@jsenv/importmap-eslint-resolver");
-  jsenvEslintConfigDirectoryUrl = resolveUrl( // remove dist/commonjs/
+  jsenvEslintConfigDirectoryUrl = util.resolveUrl( // remove dist/commonjs/
   "../../", url);
 } else {
   importResolverFilePathFallback = module$1.createRequire(url).resolve("@jsenv/importmap-eslint-resolver");
-  jsenvEslintConfigDirectoryUrl = resolveUrl( // remove src/
+  jsenvEslintConfigDirectoryUrl = util.resolveUrl( // remove src/
   "../", url);
 }
 
-const babelConfigFileUrl = resolveUrl("babel.config.cjs", jsenvEslintConfigDirectoryUrl);
-const babelConfigFilePath = urlToFileSystemPath(babelConfigFileUrl);
+const babelConfigFileUrl = util.resolveUrl("babel.config.cjs", jsenvEslintConfigDirectoryUrl);
+const babelConfigFilePath = util.urlToFileSystemPath(babelConfigFileUrl);
 const createEslintConfig = ({
   projectDirectoryUrl,
   importResolutionMethod,
@@ -581,6 +488,7 @@ const createEslintConfig = ({
   browser = true,
   node = true,
   prettier = true,
+  html = true,
   react = false,
   reactPluginSettings = {},
   jsx = react,
@@ -617,7 +525,7 @@ const createEslintConfig = ({
     Object.assign(rules, ruleMapToStandardRuleMap(eslintRuleMapForImport));
 
     if (importResolutionMethod === "import-map") {
-      projectDirectoryUrl = assertAndNormalizeDirectoryUrl(projectDirectoryUrl);
+      projectDirectoryUrl = util.assertAndNormalizeDirectoryUrl(projectDirectoryUrl);
       Object.assign(settings, {
         "import/resolver": {
           [importResolverFilePath]: {
@@ -639,6 +547,11 @@ const createEslintConfig = ({
     } else {
       throw new Error(`unexpected importResolutionMethod, got ${importResolutionMethod}`);
     }
+  }
+
+  if (html) {
+    plugins.push("html");
+    settings.extensions.push(".html");
   }
 
   if (react) {
@@ -666,7 +579,7 @@ const createEslintConfig = ({
   }
 
   return {
-    parser: "babel-eslint",
+    parser: "@babel/eslint-parser",
     parserOptions,
     env: {
       browser,
@@ -749,4 +662,5 @@ exports.createEslintConfig = createEslintConfig;
 exports.jsenvEslintRuleMap = jsenvEslintRuleMap;
 exports.jsenvEslintRuleMapForImport = jsenvEslintRuleMapForImport;
 exports.jsenvEslintRuleMapForReact = jsenvEslintRuleMapForReact;
+
 //# sourceMappingURL=main.cjs.map
