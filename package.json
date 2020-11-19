@@ -1,7 +1,7 @@
 {
   "name": "@jsenv/eslint-config",
   "description": "eslint config used by jsenv codebase.",
-  "version": "12.7.0",
+  "version": "12.8.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -50,22 +50,22 @@
     "@babel/plugin-syntax-import-meta": "7.10.4",
     "@babel/plugin-syntax-jsx": "7.12.1",
     "@babel/plugin-syntax-numeric-separator": "7.10.4",
-    "@jsenv/importmap-eslint-resolver": "2.3.1",
+    "@jsenv/importmap-eslint-resolver": "2.4.0",
     "@jsenv/util": "3.10.0",
-    "eslint-plugin-html": "6.1.0",
+    "eslint-plugin-html": "6.1.1",
     "eslint-plugin-import": "2.22.1"
   },
   "devDependencies": {
     "@jsenv/assert": "2.2.1",
-    "@jsenv/codecov-upload": "3.4.2",
-    "@jsenv/core": "16.5.1",
+    "@jsenv/codecov-upload": "3.4.3",
+    "@jsenv/core": "16.6.0",
     "@jsenv/github-release-package": "1.2.2",
     "@jsenv/node-module-import-map": "12.2.0",
     "@jsenv/package-publish": "1.5.1",
     "@jsenv/prettier-check-project": "5.6.1",
     "@jsenv/prettier-config": "1.2.0",
     "eslint-plugin-react": "7.21.5",
-    "eslint": "7.12.1",
+    "eslint": "7.13.0",
     "prettier": "2.1.2"
   }
 }
