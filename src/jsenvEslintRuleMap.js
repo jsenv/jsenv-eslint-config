@@ -320,7 +320,7 @@ export const jsenvEslintRuleMap = {
   },
   "prefer-const": {
     options: [{ destructuring: "all", ignoreReadBeforeAssign: true }],
-    severity: "warning",
+    severity: "warn",
     // I highly prefer to use const to indicate immediatly to the reader
     // that this variable is never re-assigned. let becomes
     // the exception and it helps to understand the code.
