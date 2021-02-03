@@ -212,7 +212,14 @@ export const jsenvEslintRuleMap = {
     // https://eslint.org/docs/rules/no-negated-in-lhs
     disabled: true,
   },
-  "no-nested-ternary": {},
+  "no-nested-ternary": {
+    // I prefer when ESLint really has something to say
+    // nested ternary are not wrong, especially when prettier
+    // format them correctly
+    // In the end, they often gets transformed to helper function
+    // but in the meantime eslint is complaining
+    disabled: true,
+  },
   "no-new": {},
   "no-new-func": {},
   "no-new-require": {},
@@ -294,6 +301,11 @@ export const jsenvEslintRuleMap = {
   "one-var-declaration-per-line": {},
   "operator-assignment": {
     options: ["always"],
+    // Sometimes I prefer to write toto = toto + 1
+    // instead of toto++ for whatever reason
+    // and having ESLint to complain is annoying
+    // I prefer when ESLint really has something to say
+    disabled: true,
   },
   "operator-linebreak": {
     options: [
@@ -308,6 +320,16 @@ export const jsenvEslintRuleMap = {
   },
   "prefer-const": {
     options: [{ destructuring: "all", ignoreReadBeforeAssign: true }],
+    severity: "warning",
+    // I highly prefer to use const to indicate immediatly to the reader
+    // that this variable is never re-assigned. let becomes
+    // the exception and it helps to understand the code.
+    // However during development a variable gets used once
+    // and should be const, then you reuse it, and should be let.
+    // I prefer ESLint to stay quiet during these moments.
+    // I already got the habit of using const and would not care
+    // if some let where to stay by mistake.
+    disabled: true,
   },
   "prefer-exponentiation-operator": {
     // Math.pow is cool, why being so strict ?
